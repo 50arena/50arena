@@ -1,38 +1,34 @@
 # 50 Arena
 
-موقع حجز ملعب 50 Arena، يعمل على Vercel باستخدام Serverless Functions، مع ربط Google Calendar وGoogle Sheets.
+موقع حجز لملعب `50 Arena` مع ربط مباشر بـ Google Calendar وGoogle Sheets، وإرسال تأكيد الحجز عبر واتساب، مع إمكانية إلغاء الحجز من رابط خاص.
 
 ## المميزات
 
-- واجهة عربية
-- خط Tajawal
-- عرض المواعيد المتاحة
-- الحجز حسب المدة
-- إضافة الحجز إلى Google Calendar
-- إضافة الحجز إلى Google Sheets
-- ملخص حجز للمستخدم
-- زر تأكيد عبر واتساب
-- جاهز للنشر على Vercel
-
-## التقنيات المستخدمة
-
-- HTML / CSS / JavaScript
-- Vercel Serverless Functions
-- Node.js
-- Google Calendar API
-- Google Sheets API
-- Service Account
+- واجهة عربية بسيطة وسريعة
+- عرض المواعيد المتاحة حسب اليوم والمدة
+- منع الحجز على المواعيد المشغولة من Google Calendar
+- حفظ الحجوزات في Google Sheets
+- إرسال تفاصيل الحجز عبر واتساب
+- رابط إلغاء حجز آمن لكل حجز
+- صفحة إلغاء حجز مستقلة
+- لوحة إدارة أولية عبر `admin.html`
 
 ## هيكل المشروع
 
 ```text
 api/
-  booking.js
-  settings.js
-  slots.js
   lib/
     google.js
+  admin.js
+  booking.js
+  cancel-booking.js
+  settings.js
+  slots.js
 
+cancel/
+  index.html
+
+admin.html
 index.html
 package.json
 README.md
