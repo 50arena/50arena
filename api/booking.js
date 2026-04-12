@@ -154,7 +154,7 @@ module.exports = async function handler(req, res) {
     }
 
     const whatsappText = [
-      `تأكيد حجز ${CONFIG.BRAND_NAME}`,
+      `تأكيد حجز \u202A${CONFIG.BRAND_NAME}\u202C`,
       `الاسم: ${name}`,
       `رقم الهاتف: ${phoneLocal}`,
       `التاريخ: ${date}`,
