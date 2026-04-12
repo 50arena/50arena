@@ -166,7 +166,7 @@ module.exports = async function handler(req, res) {
 
     return res.status(200).json({
       success: true,
-      message: "تم تأكيد الحجز بنجاح",
+      message: "تم تأكيد الحجز بنجاح، شكرًا لاختيارك ملعب \u200E50 Arena\u200E",
       bookingDetails: {
         name,
         phone: phoneLocal,
