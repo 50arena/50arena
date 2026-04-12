@@ -4,9 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>50 Arena</title>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
   <style>
     * { box-sizing: border-box; }
 
@@ -291,26 +294,25 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      gap: 0.9rem;
+      gap: 1.1rem;
       flex-wrap: wrap;
     }
 
     .footer-icon {
-      width: 40px;
-      height: 40px;
+      width: 46px;
+      height: 46px;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      background: transparent;
-      border: none;
-      box-shadow: none;
+      color: #ffffff;
+      text-decoration: none;
+      font-size: 28px;
+      transition: transform 0.2s ease, opacity 0.2s ease;
     }
-    
-    .footer-icon img {
-      width: 28px;
-      height: 28px;
-      object-fit: contain;
-      display: block;
+
+    .footer-icon:hover {
+      transform: translateY(-2px);
+      opacity: 0.9;
     }
 
     .floating-wa {
@@ -372,17 +374,13 @@
       }
 
       .footer-icons {
-        gap: 0.75rem;
+        gap: 0.9rem;
       }
 
       .footer-icon {
-        width: 54px;
-        height: 54px;
-      }
-
-      .footer-icon img {
-        width: 22px;
-        height: 22px;
+        width: 42px;
+        height: 42px;
+        font-size: 24px;
       }
     }
   </style>
@@ -407,6 +405,7 @@
           <label for="date">التاريخ</label>
           <input type="date" id="date">
         </div>
+
         <div>
           <label for="duration">مدة الحجز</label>
           <select id="duration"></select>
@@ -466,20 +465,20 @@
     <div class="contact-title">ننتظرك انت وفريقك في <span dir="ltr">50 Arena</span></div>
 
     <div class="footer-icons">
-      <a class="footer-icon" href="https://www.facebook.com/50arena" target="_blank" rel="noreferrer" aria-label="Facebook">
-        <img src="https://drive.google.com/thumbnail?id=1tl_M8byvEU05qa0z6U6ahslP-yCxLrxX&sz=w200" alt="Facebook">
-      </a>
-
-      <a class="footer-icon" href="https://www.instagram.com/50arena" target="_blank" rel="noreferrer" aria-label="Instagram">
-        <img src="https://drive.google.com/thumbnail?id=1np2u6hKRIBj9HPNq9NoXRYSi3utRzMVe&sz=w200" alt="Instagram">
+      <a class="footer-icon" href="tel:0779605047" aria-label="اتصال">
+        <i class="fa-solid fa-phone"></i>
       </a>
 
       <a class="footer-icon" href="https://wa.me/962779605047" target="_blank" rel="noreferrer" aria-label="واتساب">
-        <img src="https://drive.google.com/thumbnail?id=1iNhEgW9xdkgsfIEJ376YLbRnJN_YvTpC&sz=w200" alt="واتساب">
+        <i class="fa-brands fa-whatsapp"></i>
       </a>
 
-      <a class="footer-icon" href="tel:0779605047" aria-label="اتصال">
-        <img src="https://drive.google.com/thumbnail?id=1DctrtB5ZOuZaY_0uyGZNCoFEwVnPoumg&sz=w200" alt="اتصال">
+      <a class="footer-icon" href="https://www.instagram.com/50arena" target="_blank" rel="noreferrer" aria-label="Instagram">
+        <i class="fa-brands fa-instagram"></i>
+      </a>
+
+      <a class="footer-icon" href="https://www.facebook.com/50arena" target="_blank" rel="noreferrer" aria-label="Facebook">
+        <i class="fa-brands fa-facebook-f"></i>
       </a>
     </div>
   </div>
