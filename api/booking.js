@@ -126,16 +126,16 @@ module.exports = async function handler(req, res) {
 
     try {
       await ensureSheetHeader();
-      await appendBookingToSheet({
-        name,
-        phone: phoneLocal,
-        date,
-        start: start.toISOString(),
-        end: end.toISOString(),
-        price,
-        notes: notes || "-",
-        eventId: created.data.id || ""
-      });
+     await appendBookingToSheet({
+    name,
+    phone: phoneLocal,
+    date,
+    start: formatTime(start),
+    end: formatTime(end),
+    price,
+    notes: notes || "-",
+    eventId: created.data.id || ""
+  });
     } catch (sheetError) {
       if (created.data.id) {
         try {
