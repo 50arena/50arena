@@ -2,6 +2,12 @@
   "name": "50arena-booking",
   "version": "1.0.0",
   "private": true,
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "check": "node -e \"require('./api/settings'); require('./api/slots'); require('./api/booking'); console.log('API modules loaded successfully')\""
+  },
   "dependencies": {
     "googleapis": "^144.0.0"
   }
