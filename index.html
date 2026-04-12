@@ -9,6 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
   <style>
     * { box-sizing: border-box; }
+
     :root {
       --bg: #f4f8f3;
       --surface: #ffffff;
@@ -23,41 +24,74 @@
       --error-text: #b00020;
       --wa: #25D366;
     }
-    * { box-sizing: border-box; }
+
     body {
       margin: 0;
       font-family: "Tajawal", sans-serif;
-      background:
-        radial-gradient(circle at top, rgba(15, 79, 51, 0.16), transparent 30%),
-        linear-gradient(180deg, #ffffff 0%, var(--bg) 100%);
+      background: linear-gradient(180deg, #ffffff 0%, var(--bg) 100%);
       color: var(--text);
     }
-    .page {
+
+    .hero-shell {
+      background:
+        radial-gradient(circle at top, rgba(255, 255, 255, 0.08), transparent 32%),
+        linear-gradient(180deg, #0d6b34 0%, var(--accent) 100%);
+      color: #fff;
+      padding: 2.5rem 1rem 3rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-shell::after {
+      content: "";
+      position: absolute;
+      inset: auto -10% -60px;
+      height: 140px;
+      background: rgba(255, 255, 255, 0.06);
+      filter: blur(30px);
+      border-radius: 999px;
+    }
+
+    .hero-inner {
       max-width: 720px;
       margin: 0 auto;
-      padding: 0 1rem 7rem;
+      text-align: center;
+      position: relative;
+      z-index: 1;
     }
+
+    .page {
+      max-width: 720px;
+      margin: -1.75rem auto 0;
+      padding: 0 1rem 7rem;
+      position: relative;
+      z-index: 2;
+    }
+
     .app-header {
       text-align: center;
-      padding: 2rem 0 1rem;
     }
+
     .app-logo {
       width: min(240px, 80%);
       display: block;
       margin: 0 auto 1rem;
-      filter: drop-shadow(0 10px 22px rgba(0, 0, 0, 0.08));
+      filter: drop-shadow(0 14px 24px rgba(0, 0, 0, 0.15));
     }
+
     .app-title {
       font-size: clamp(2rem, 5vw, 3rem);
       font-weight: 900;
       letter-spacing: 0.02em;
     }
+
     .app-slogan {
       margin-top: 0.75rem;
-      color: var(--muted);
+      color: rgba(255, 255, 255, 0.92);
       font-size: 1.05rem;
       font-weight: 500;
     }
+
     .card {
       background: rgba(255, 255, 255, 0.97);
       border: 1px solid rgba(215, 227, 219, 0.95);
@@ -66,22 +100,26 @@
       backdrop-filter: blur(10px);
       box-shadow: 0 12px 28px rgba(15, 79, 51, 0.08);
     }
+
     .hero-title {
       text-align: center;
       font-size: 1.15rem;
       font-weight: 800;
       margin-bottom: 1rem;
     }
+
     .grid {
       display: grid;
       gap: 0.85rem;
     }
+
     label {
       display: block;
       font-size: 1rem;
       font-weight: 800;
       margin-bottom: 0.35rem;
     }
+
     input, select, textarea {
       width: 100%;
       padding: 0.95rem 1rem;
@@ -91,19 +129,23 @@
       font-family: inherit;
       background: #fff;
     }
+
     input:focus, select:focus, textarea:focus {
       outline: 2px solid rgba(242, 201, 76, 0.25);
       border-color: var(--accent-2);
     }
+
     textarea {
       min-height: 4.5rem;
       resize: vertical;
     }
+
     .hint {
       font-size: 0.86rem;
       color: var(--muted);
       margin-top: -0.25rem;
     }
+
     .result {
       display: none;
       background: #f8fdf9;
@@ -112,6 +154,7 @@
       border-radius: 1rem;
       margin-top: 1rem;
     }
+
     .result ul {
       list-style: none;
       padding: 0;
@@ -119,6 +162,7 @@
       display: grid;
       gap: 0.45rem;
     }
+
     .result-price {
       display: none;
       font-size: 2rem;
@@ -127,6 +171,7 @@
       margin-top: 0.85rem;
       font-weight: 900;
     }
+
     .wa {
       display: none;
       background: var(--wa);
@@ -139,6 +184,7 @@
       font-size: 1rem;
       font-weight: 800;
     }
+
     .status {
       display: none;
       margin-top: 0.85rem;
@@ -147,21 +193,25 @@
       font-size: 0.95rem;
       line-height: 1.6;
     }
+
     .status.success {
       display: block;
       background: var(--success-bg);
       color: var(--success-text);
     }
+
     .status.error {
       display: block;
       background: var(--error-bg);
       color: var(--error-text);
     }
+
     .status.info {
       display: block;
       background: #fff6df;
       color: #7d5c10;
     }
+
     .loading {
       display: none;
       margin-top: 0.75rem;
@@ -169,6 +219,7 @@
       color: var(--muted);
       text-align: center;
     }
+
     .fixed-btn {
       position: fixed;
       bottom: 0;
@@ -179,6 +230,7 @@
       backdrop-filter: blur(12px);
       border-top: 1px solid rgba(215, 227, 219, 0.9);
     }
+
     .fixed-btn button {
       width: min(720px, 100%);
       display: block;
@@ -193,10 +245,12 @@
       font-weight: 800;
       cursor: pointer;
     }
+
     .fixed-btn button:disabled {
       opacity: 0.6;
       cursor: wait;
     }
+
     .contact-block {
       display: none;
       margin-top: 1rem;
@@ -206,17 +260,20 @@
       border: 1px solid var(--line);
       text-align: center;
     }
+
     .contact-title {
       font-size: 1rem;
       font-weight: 800;
       margin-bottom: 0.9rem;
     }
+
     .contact-icons {
       display: flex;
       justify-content: center;
       gap: 0.85rem;
       flex-wrap: wrap;
     }
+
     .contact-link {
       width: 60px;
       height: 60px;
@@ -228,12 +285,58 @@
       border: 1px solid var(--line);
       box-shadow: 0 8px 20px rgba(15, 79, 51, 0.08);
     }
+
     .contact-link img {
       width: 28px;
       height: 28px;
       object-fit: contain;
       display: block;
     }
+
+    .footer-contact {
+      margin-top: 1.2rem;
+      background: linear-gradient(180deg, #0d6b34 0%, var(--accent) 100%);
+      border-radius: 0;
+      padding: 2rem 1rem 1.2rem;
+      color: #fff;
+      text-align: center;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    }
+
+    .footer-contact .contact-title {
+      color: #fff;
+      font-size: 1.9rem;
+      margin-bottom: 1rem;
+    }
+
+    .footer-contact .contact-icons {
+      gap: 1rem;
+    }
+
+    .footer-contact .contact-link {
+      width: auto;
+      min-width: 110px;
+      padding: 0 1.2rem;
+      height: 56px;
+      border-radius: 1.15rem;
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 800;
+      gap: 0.55rem;
+      box-shadow: none;
+    }
+
+    .footer-contact .contact-link img {
+      width: 24px;
+      height: 24px;
+    }
+
+    .footer-contact .contact-label {
+      display: inline-block;
+      color: var(--accent);
+      font-size: 0.95rem;
+    }
+
     .floating-wa {
       position: fixed;
       left: 1rem;
@@ -248,34 +351,56 @@
       box-shadow: 0 12px 24px rgba(37, 211, 102, 0.28);
       z-index: 30;
     }
+
     .floating-wa img {
       width: 52px;
       height: 52px;
       border-radius: 999px;
       display: block;
     }
+
     .app-footer {
       text-align: center;
-      padding: 1.5rem 0 0.75rem;
-      color: var(--accent);
+      padding: 1rem 0 0;
+      color: #fff;
       font-weight: 800;
       font-size: 1rem;
     }
+
     @media (min-width: 700px) {
       .grid.two {
         grid-template-columns: 1fr 1fr;
       }
     }
+
+    @media (max-width: 520px) {
+      .hero-shell {
+        padding-top: 2rem;
+      }
+
+      .footer-contact .contact-icons {
+        gap: 0.75rem;
+      }
+
+      .footer-contact .contact-link {
+        min-width: 96px;
+        padding: 0 0.95rem;
+      }
+    }
   </style>
 </head>
 <body>
-  <div class="page">
-    <div class="app-header">
-      <img class="app-logo" src="https://drive.google.com/thumbnail?id=1P20NGu_6cNv5t5-KZ8gFDabU-IJdlGjs&sz=w1000" alt="50 Arena Logo">
-      <div class="app-title" dir="ltr">50 Arena</div>
-      <div class="app-slogan">أول ملعب 5×5 بمواصفات فيفا في الطفيلة</div>
+  <div class="hero-shell">
+    <div class="hero-inner">
+      <div class="app-header">
+        <img class="app-logo" src="https://drive.google.com/thumbnail?id=1P20NGu_6cNv5t5-KZ8gFDabU-IJdlGjs&sz=w1000" alt="50 Arena Logo">
+        <div class="app-title" dir="ltr">50 Arena</div>
+        <div class="app-slogan">أول ملعب 5×5 بمواصفات فيفا في الطفيلة</div>
+      </div>
     </div>
+  </div>
 
+  <div class="page">
     <div class="card">
       <div class="hero-title">احجز موعدك من 12 ظهرًا حتى 12 ليلًا</div>
 
@@ -337,8 +462,29 @@
         </div>
       </div>
     </div>
+  </div>
 
-    <div class="app-footer">ننتظرك أنت وفريقك في 50 Arena</div>
+  <div class="footer-contact">
+    <div class="contact-title">ننتظرك أنت وفريقك في 50 Arena</div>
+    <div class="contact-icons">
+      <a class="contact-link" href="https://www.facebook.com/50arena" target="_blank" rel="noreferrer" aria-label="Facebook">
+        <img src="https://drive.google.com/thumbnail?id=1tl_M8byvEU05qa0z6U6ahslP-yCxLrxX&sz=w200" alt="Facebook">
+        <span class="contact-label">Facebook</span>
+      </a>
+      <a class="contact-link" href="https://www.instagram.com/50arena" target="_blank" rel="noreferrer" aria-label="Instagram">
+        <img src="https://drive.google.com/thumbnail?id=1np2u6hKRIBj9HPNq9NoXRYSi3utRzMVe&sz=w200" alt="Instagram">
+        <span class="contact-label">Instagram</span>
+      </a>
+      <a class="contact-link" href="https://wa.me/962779605047" target="_blank" rel="noreferrer" aria-label="واتساب">
+        <img src="https://drive.google.com/thumbnail?id=1iNhEgW9xdkgsfIEJ376YLbRnJN_YvTpC&sz=w200" alt="واتساب">
+        <span class="contact-label">واتساب</span>
+      </a>
+      <a class="contact-link" href="tel:0779605047" aria-label="اتصال">
+        <img src="https://drive.google.com/thumbnail?id=1DctrtB5ZOuZaY_0uyGZNCoFEwVnPoumg&sz=w200" alt="اتصال">
+        <span class="contact-label">اتصال</span>
+      </a>
+    </div>
+    <div class="app-footer"></div>
   </div>
 
   <a class="floating-wa" href="https://wa.me/962779605047" target="_blank" rel="noreferrer" aria-label="واتساب">
@@ -350,6 +496,8 @@
   </div>
 
   <script>
+    let settings = null;
+
     const dateInput = document.getElementById("date");
     const durationSelect = document.getElementById("duration");
     const slotSelect = document.getElementById("slot");
@@ -564,6 +712,7 @@
           return;
         }
 
+        settings = data;
         dateInput.min = data.minDate;
         dateInput.max = data.maxDate;
         dateInput.value = data.minDate;
