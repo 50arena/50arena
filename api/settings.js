@@ -1,12 +1,38 @@
+const {
+  CONFIG,
+  formatDateOnly,
+  addDays,
+  hasGoogleCredentials,
+  getGoogleStatus
+} = require("./lib/google");
+
 module.exports = async function handler(req, res) {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Methods", "GET, OPTIONS");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+
+  if (req.method === "OPTIONS") {
+    return res.status(200).end();
+  }
+
+  if (req.method !== "GET") {
+    return res.status(405).json({ error: "Method not allowed" });
+  }
+
+  const now = new Date();
+  const googleStatus = getGoogleStatus();
+
   return res.status(200).json({
-    durations: [
-      { label: "ساعة", value: 60, price: 15 },
-      { label: "ساعة ونصف", value: 90, price: 20 },
-      { label: "ساعتان", value: 120, price: 25 },
-      { label: "3 ساعات", value: 180, price: 35 }
-    ],
-    minDate: "2026-04-11",
-    maxDate: "2026-05-11"
+    brandName: CONFIG.BRAND_NAME,
+    slogan: CONFIG.SLOGAN,
+    timezone: CONFIG.TIMEZONE,
+    openHour: CONFIG.OPEN_HOUR,
+    closeHour: CONFIG.CLOSE_HOUR,
+    arenaWhatsappNumber: CONFIG.ARENA_WHATSAPP_NUMBER,
+    durations: CONFIG.DURATIONS,
+    minDate: formatDateOnly(now),
+    maxDate: formatDateOnly(addDays(now, CONFIG.MAX_DAYS_AHEAD)),
+    googleReady: hasGoogleCredentials(),
+    googleStatus
   });
 };
