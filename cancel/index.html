@@ -144,7 +144,14 @@
           return;
         }
 
-        showStatus(data.message || "تم إلغاء الحجز بنجاح", "success");
+        const booking = data.bookingDetails || {};
+        const successMessage = [
+          data.message || "تم إلغاء الحجز بنجاح",
+          booking.date ? `التاريخ: ${booking.date}` : "",
+          booking.start && booking.end ? `الوقت: ${booking.start} - ${booking.end}` : ""
+        ].filter(Boolean).join("\n");
+        
+        showStatus(successMessage, "success");
       } catch (error) {
         showStatus("تعذر إلغاء الحجز", "error");
         cancelBtn.disabled = false;
