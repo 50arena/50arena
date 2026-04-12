@@ -1,1 +1,548 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>50 Arena Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; }
+    :root {
+      --bg: #f5f8f6;
+      --surface: #ffffff;
+      --ink: #173528;
+      --muted: #688073;
+      --line: #d8e3dc;
+      --green: #0f4f33;
+      --green-2: #136740;
+      --yellow: #f0c84b;
+      --danger-bg: #fdeeee;
+      --danger-text: #b00020;
+    }
+    body {
+      margin: 0;
+      font-family: "Tajawal", sans-serif;
+      background: linear-gradient(180deg, #fdfefe 0%, var(--bg) 100%);
+      color: var(--ink);
+    }
+    .hero {
+      background: linear-gradient(180deg, var(--green-2) 0%, var(--green) 100%);
+      color: #fff;
+      padding: 2rem 1rem 3.5rem;
+    }
+    .hero-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+    }
+    .hero h1 {
+      margin: 0;
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 900;
+    }
+    .hero p {
+      margin: 0.7rem 0 0;
+      color: rgba(255, 255, 255, 0.88);
+      font-size: 1rem;
+    }
+    .page {
+      max-width: 1120px;
+      margin: -1.6rem auto 0;
+      padding: 0 1rem 2rem;
+    }
+    .status {
+      display: none;
+      margin-bottom: 1rem;
+      padding: 0.95rem 1rem;
+      border-radius: 1rem;
+      background: var(--danger-bg);
+      color: var(--danger-text);
+      font-weight: 700;
+    }
+    .status.show {
+      display: block;
+    }
+    .summary-grid {
+      display: grid;
+      gap: 1rem;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      margin-bottom: 1rem;
+    }
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 1.5rem;
+      box-shadow: 0 12px 26px rgba(15, 79, 51, 0.06);
+    }
+    .stat-card {
+      padding: 1.1rem;
+    }
+    .stat-label {
+      color: var(--muted);
+      font-size: 0.95rem;
+      font-weight: 700;
+    }
+    .stat-value {
+      margin-top: 0.55rem;
+      font-size: 2rem;
+      font-weight: 900;
+      color: var(--green);
+    }
+    .layout {
+      display: grid;
+      gap: 1rem;
+      grid-template-columns: 1.3fr 0.9fr;
+      align-items: start;
+    }
+    .panel {
+      padding: 1.15rem;
+    }
+    .panel h2 {
+      margin: 0 0 0.9rem;
+      font-size: 1.2rem;
+      font-weight: 900;
+    }
+    .phones {
+      display: grid;
+      gap: 0.7rem;
+    }
+    .phone-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.6rem;
+      padding: 0.85rem 1rem;
+      border: 1px solid var(--line);
+      border-radius: 1rem;
+      background: #fbfdfb;
+    }
+    .phone-item a {
+      color: var(--green);
+      text-decoration: none;
+      font-weight: 800;
+    }
+    .mini-list {
+      display: grid;
+      gap: 0.7rem;
+    }
+    .mini-item {
+      padding: 0.8rem 0.9rem;
+      border-radius: 1rem;
+      background: #f8fbf8;
+      border: 1px solid var(--line);
+    }
+    .mini-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 0.75rem;
+      font-weight: 800;
+    }
+    .mini-sub {
+      margin-top: 0.35rem;
+      color: var(--muted);
+      font-size: 0.94rem;
+    }
+    .table-wrap {
+      overflow-x: auto;
+    }
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 82px;
+      padding: 0.35rem 0.7rem;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      font-weight: 800;
+      background: #e9f8ee;
+      color: #156b2e;
+    }
+    .status-pill.cancelled {
+      background: #fdeeee;
+      color: #b00020;
+    }
+    .row-actions {
+      display: flex;
+      justify-content: flex-start;
+    }
+    .cancel-btn {
+      border: none;
+      border-radius: 0.8rem;
+      padding: 0.5rem 0.8rem;
+      background: #fdeeee;
+      color: #b00020;
+      font-family: inherit;
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .cancel-btn:disabled {
+      opacity: 0.6;
+      cursor: wait;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 900px;
+    }
+    th, td {
+      padding: 0.85rem 0.8rem;
+      border-bottom: 1px solid var(--line);
+      text-align: right;
+      white-space: nowrap;
+    }
+    th {
+      color: var(--muted);
+      font-size: 0.92rem;
+      font-weight: 800;
+      background: #fbfcfb;
+      position: sticky;
+      top: 0;
+    }
+    td strong {
+      color: var(--green);
+    }
+    .toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 0.9rem;
+      flex-wrap: wrap;
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.45rem 0.8rem;
+      border-radius: 999px;
+      background: #fdf6da;
+      color: #6f5608;
+      font-weight: 800;
+      font-size: 0.9rem;
+    }
+    .loading {
+      text-align: center;
+      color: var(--muted);
+      font-weight: 700;
+      padding: 1rem 0;
+    }
+    @media (max-width: 880px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="hero">
+    <div class="hero-inner">
+      <h1 dir="ltr">50 Arena Dashboard</h1>
+      <p>لوحة متابعة الحجوزات والإيرادات اليومية والشهرية</p>
+    </div>
+  </div>
 
+  <div class="page">
+    <div id="status" class="status"></div>
+
+    <div class="summary-grid">
+      <div class="card stat-card">
+        <div class="stat-label">حجوزات اليوم</div>
+        <div id="todayBookings" class="stat-value">-</div>
+      </div>
+      <div class="card stat-card">
+        <div class="stat-label">دخل اليوم</div>
+        <div id="todayRevenue" class="stat-value">-</div>
+      </div>
+      <div class="card stat-card">
+        <div class="stat-label">حجوزات الشهر</div>
+        <div id="monthBookings" class="stat-value">-</div>
+      </div>
+      <div class="card stat-card">
+        <div class="stat-label">دخل الشهر</div>
+        <div id="monthRevenue" class="stat-value">-</div>
+      </div>
+      <div class="card stat-card">
+        <div class="stat-label">الساعات المحجوزة اليوم</div>
+        <div id="todayHours" class="stat-value">-</div>
+      </div>
+    </div>
+
+    <div class="layout">
+      <div class="card panel">
+        <div class="toolbar">
+          <h2>كل الحجوزات النشطة</h2>
+          <span id="todayBadge" class="badge">اليوم: -</span>
+        </div>
+        <div id="tableLoading" class="loading">جارٍ تحميل البيانات...</div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>الاسم</th>
+                <th>الهاتف</th>
+                <th>التاريخ</th>
+                <th>البداية</th>
+                <th>النهاية</th>
+                <th>السعر</th>
+                <th>الحالة</th>
+                <th>ملاحظات</th>
+                <th>وقت الإنشاء</th>
+                <th>إجراء</th>
+              </tr>
+            </thead>
+            <tbody id="bookingsBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="side">
+        <div class="card panel" style="margin-bottom:1rem;">
+          <h2>أرقام حجوزات اليوم</h2>
+          <div id="phonesList" class="phones"></div>
+        </div>
+
+        <div class="card panel">
+          <h2>الحجوزات القادمة اليوم</h2>
+          <div id="upcomingList" class="mini-list"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const statusBox = document.getElementById("status");
+    const todayBookingsEl = document.getElementById("todayBookings");
+    const todayRevenueEl = document.getElementById("todayRevenue");
+    const monthBookingsEl = document.getElementById("monthBookings");
+    const monthRevenueEl = document.getElementById("monthRevenue");
+    const todayHoursEl = document.getElementById("todayHours");
+    const todayBadgeEl = document.getElementById("todayBadge");
+    const bookingsBody = document.getElementById("bookingsBody");
+    const phonesList = document.getElementById("phonesList");
+    const upcomingList = document.getElementById("upcomingList");
+    const tableLoading = document.getElementById("tableLoading");
+
+    function showError(message) {
+      statusBox.textContent = message;
+      statusBox.className = "status show";
+    }
+
+    function hideError() {
+      statusBox.textContent = "";
+      statusBox.className = "status";
+    }
+
+    function renderPhones(phones) {
+      phonesList.innerHTML = "";
+
+      if (!phones.length) {
+        const empty = document.createElement("div");
+        empty.className = "mini-sub";
+        empty.textContent = "لا توجد أرقام لهذا اليوم";
+        phonesList.appendChild(empty);
+        return;
+      }
+
+      phones.forEach(phone => {
+        const item = document.createElement("div");
+        item.className = "phone-item";
+
+        const text = document.createElement("a");
+        text.href = "tel:" + phone.replace(/^\+/, "");
+        text.textContent = phone;
+
+        const wa = document.createElement("a");
+        wa.href = "https://wa.me/" + phone.replace(/[^\d]/g, "");
+        wa.target = "_blank";
+        wa.rel = "noreferrer";
+        wa.textContent = "واتساب";
+
+        item.appendChild(text);
+        item.appendChild(wa);
+        phonesList.appendChild(item);
+      });
+    }
+
+    function renderUpcoming(items) {
+      upcomingList.innerHTML = "";
+
+      if (!items.length) {
+        const empty = document.createElement("div");
+        empty.className = "mini-sub";
+        empty.textContent = "لا توجد حجوزات قادمة اليوم";
+        upcomingList.appendChild(empty);
+        return;
+      }
+
+      items.forEach(item => {
+        const card = document.createElement("div");
+        card.className = "mini-item";
+
+        const top = document.createElement("div");
+        top.className = "mini-top";
+        const nameSpan = document.createElement("span");
+        nameSpan.textContent = item.name;
+        const timeSpan = document.createElement("span");
+        timeSpan.textContent = item.start + " - " + item.end;
+        top.appendChild(nameSpan);
+        top.appendChild(timeSpan);
+
+        const sub = document.createElement("div");
+        sub.className = "mini-sub";
+        sub.textContent = item.phone + " - " + item.jod;
+
+        card.appendChild(top);
+        card.appendChild(sub);
+        upcomingList.appendChild(card);
+      });
+    }
+
+    function renderBookings(rows) {
+      bookingsBody.innerHTML = "";
+      tableLoading.style.display = "none";
+
+      if (!rows.length) {
+        const tr = document.createElement("tr");
+        const td = document.createElement("td");
+        td.colSpan = 10;
+        td.textContent = "لا توجد حجوزات نشطة حاليًا";
+        tr.appendChild(td);
+        bookingsBody.appendChild(tr);
+        return;
+      }
+
+      rows.forEach(row => {
+        const tr = document.createElement("tr");
+        const values = [
+          row.name || "-",
+          row.phone || "-",
+          row.date || "-",
+          row.start || "-",
+          row.end || "-",
+          row.jod || "-",
+          row.notes || "-",
+          row.createdAt || "-"
+        ];
+
+        values.slice(0, 6).forEach((value, index) => {
+          const td = document.createElement("td");
+          if (index === 0) {
+            const strong = document.createElement("strong");
+            strong.textContent = value;
+            td.appendChild(strong);
+          } else {
+            td.textContent = value;
+          }
+          tr.appendChild(td);
+        });
+
+        const statusTd = document.createElement("td");
+        const statusSpan = document.createElement("span");
+        statusSpan.className = "status-pill" + (row.status === "Cancelled" ? " cancelled" : "");
+        statusSpan.textContent = row.status === "Cancelled" ? "ملغي" : "نشط";
+        statusTd.appendChild(statusSpan);
+        tr.appendChild(statusTd);
+
+        values.slice(6).forEach(value => {
+          const td = document.createElement("td");
+          td.textContent = value;
+          tr.appendChild(td);
+        });
+
+        const actionsTd = document.createElement("td");
+        const actionsWrap = document.createElement("div");
+        actionsWrap.className = "row-actions";
+        const cancelBtn = document.createElement("button");
+        cancelBtn.className = "cancel-btn";
+        cancelBtn.textContent = "إلغاء";
+        cancelBtn.disabled = !row.eventId || row.status === "Cancelled";
+        cancelBtn.addEventListener("click", function() {
+          cancelBooking(row.eventId, cancelBtn);
+        });
+        actionsWrap.appendChild(cancelBtn);
+        actionsTd.appendChild(actionsWrap);
+        tr.appendChild(actionsTd);
+
+        bookingsBody.appendChild(tr);
+      });
+    }
+
+    async function cancelBooking(eventId, button) {
+      if (!eventId) {
+        showError("معرف الحجز غير صالح");
+        return;
+      }
+
+      const confirmed = window.confirm("هل أنت متأكد من إلغاء هذا الحجز؟");
+      if (!confirmed) {
+        return;
+      }
+
+      button.disabled = true;
+
+      try {
+        const response = await fetch("/api/admin-cancel", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ eventId })
+        });
+
+        const text = await response.text();
+        let data;
+
+        try {
+          data = JSON.parse(text);
+        } catch (error) {
+          data = { error: text || "تعذر إلغاء الحجز" };
+        }
+
+        if (!response.ok) {
+          throw new Error(data.error || "تعذر إلغاء الحجز");
+        }
+
+        await loadDashboard();
+      } catch (error) {
+        button.disabled = false;
+        showError(error.message || "تعذر إلغاء الحجز");
+      }
+    }
+
+    async function loadDashboard() {
+      hideError();
+
+      try {
+        const response = await fetch("/api/admin");
+        const text = await response.text();
+        let data;
+
+        try {
+          data = JSON.parse(text);
+        } catch (error) {
+          data = { error: text || "تعذر تحميل لوحة الإدارة" };
+        }
+
+        if (!response.ok) {
+          throw new Error(data.error || "تعذر تحميل لوحة الإدارة");
+        }
+
+        todayBookingsEl.textContent = data.summary.todayBookings;
+        todayRevenueEl.textContent = data.summary.todayRevenue;
+        monthBookingsEl.textContent = data.summary.monthBookings;
+        monthRevenueEl.textContent = data.summary.monthRevenue;
+        todayHoursEl.textContent = data.summary.todayHours + " س";
+        todayBadgeEl.textContent = "اليوم: " + data.today;
+
+        renderPhones(data.phoneNumbersToday || []);
+        renderUpcoming(data.upcomingToday || []);
+        renderBookings(data.bookings || []);
+      } catch (error) {
+        tableLoading.style.display = "none";
+        showError(error.message || "تعذر تحميل لوحة الإدارة");
+      }
+    }
+
+    loadDashboard();
+  </script>
+</body>
+</html>
