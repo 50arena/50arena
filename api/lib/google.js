@@ -353,7 +353,7 @@ async function ensureSheetHeader() {
 
   const headerResponse = await sheets.spreadsheets.values.get({
     spreadsheetId: env.sheetId,
-    range: "Bookings!A1:I1"
+    range: "Bookings!A1:K1"
   });
 
   const values = headerResponse.data.values || [];
@@ -363,7 +363,7 @@ async function ensureSheetHeader() {
 
   await sheets.spreadsheets.values.update({
     spreadsheetId: env.sheetId,
-    range: "Bookings!A1:I1",
+    range: "Bookings!A1:K1",
     valueInputOption: "RAW",
     requestBody: {
       values: [[
@@ -375,7 +375,9 @@ async function ensureSheetHeader() {
         "End",
         "JOD",
         "Notes",
-        "Calendar Event ID"
+        "Calendar Event ID",
+        "Status",
+        "Cancelled At"
       ]]
     }
   });
@@ -388,7 +390,7 @@ async function appendBookingToSheet(row) {
 
   await sheets.spreadsheets.values.append({
     spreadsheetId: env.sheetId,
-    range: "Bookings!A:I",
+    range: "Bookings!A:K",
     valueInputOption: "USER_ENTERED",
     requestBody: {
       values: [[
@@ -400,7 +402,9 @@ async function appendBookingToSheet(row) {
         row.end,
         row.price,
         row.notes,
-        row.eventId
+        row.eventId,
+        row.status,
+        row.cancelledAt
       ]]
     }
   });
@@ -433,5 +437,6 @@ module.exports = {
   tryListCalendarEventsForDay,
   ensureSheetHeader,
   appendBookingToSheet,
-  getCalendarClient
+  getCalendarClient,
+  getSheetsClient
 };
