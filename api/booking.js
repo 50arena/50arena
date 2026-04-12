@@ -3,6 +3,7 @@ const {
   cleanString,
   isValidJordanPhone,
   normalizeJordanPhoneLocal,
+  normalizeJordanPhoneInternational,
   getPrice,
   getDurationLabel,
   formatDateOnly,
@@ -87,6 +88,7 @@ module.exports = async function handler(req, res) {
 
     const durationLabel = getDurationLabel(durationMinutes);
     const phoneLocal = normalizeJordanPhoneLocal(phone);
+    const phoneInternational = normalizeJordanPhoneInternational(phone);
     const dayEvents = await listCalendarEventsForDay(start);
     const taken = dayEvents.some(event =>
       eventOverlaps(start, end, event.start, event.end)
@@ -126,16 +128,16 @@ module.exports = async function handler(req, res) {
 
     try {
       await ensureSheetHeader();
-     await appendBookingToSheet({
-    name,
-    phone: phoneLocal,
-    date,
-    start: formatTime(start),
-    end: formatTime(end),
-    price,
-    notes: notes || "-",
-    eventId: created.data.id || ""
-  });
+      await appendBookingToSheet({
+        name,
+        phone: phoneInternational,
+        date,
+        start: formatTime(start),
+        end: formatTime(end),
+        price,
+        notes: notes || "-",
+        eventId: created.data.id || ""
+      });
     } catch (sheetError) {
       if (created.data.id) {
         try {
