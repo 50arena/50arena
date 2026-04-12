@@ -221,14 +221,16 @@
     }
 
     .fixed-btn {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      padding: 0.75rem 1rem max(0.75rem, env(safe-area-inset-bottom));
-      background: rgba(255, 255, 255, 0.97);
-      backdrop-filter: blur(12px);
-      border-top: 1px solid rgba(215, 227, 219, 0.9);
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 0.75rem 1rem max(0.75rem, env(safe-area-inset-bottom));
+    background: rgba(255, 255, 255, 0.97);
+    backdrop-filter: blur(12px);
+    border-top: 1px solid rgba(215, 227, 219, 0.9);
+    z-index: 1000;
+}
     }
 
     .fixed-btn button {
@@ -347,7 +349,7 @@
       text-align: center;
     }
 
-    .floating-wa {
+      .floating-wa {
       position: fixed;
       left: 1rem;
       bottom: 5.7rem;
@@ -359,7 +361,8 @@
       align-items: center;
       justify-content: center;
       box-shadow: 0 12px 24px rgba(37, 211, 102, 0.28);
-      z-index: 30;
+      z-index: 1001;
+    }
     }
 
     .floating-wa img {
