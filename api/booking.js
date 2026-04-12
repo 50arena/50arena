@@ -139,7 +139,9 @@ module.exports = async function handler(req, res) {
         end: formatTime(end),
         price,
         notes: notes || "-",
-        eventId: created.data.id || ""
+        eventId: created.data.id || "",
+        status: "Active",
+        cancelledAt: ""
       });
     } catch (sheetError) {
       if (created.data.id) {
