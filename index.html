@@ -230,49 +230,7 @@
       color: var(--muted);
       text-align: center;
     }
-
-    .contact-block {
-      display: none;
-      margin-top: 1rem;
-      padding: 1rem;
-      border-radius: 1.25rem;
-      background: #f7fbf8;
-      border: 1px solid var(--line);
-      text-align: center;
-    }
-
-    .contact-title {
-      font-size: 1rem;
-      font-weight: 800;
-      margin-bottom: 0.9rem;
-    }
-
-    .contact-icons {
-      display: flex;
-      justify-content: center;
-      gap: 0.85rem;
-      flex-wrap: wrap;
-    }
-
-    .contact-link {
-      width: 60px;
-      height: 60px;
-      border-radius: 999px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      background: #ffffff;
-      border: 1px solid var(--line);
-      box-shadow: 0 8px 20px rgba(15, 79, 51, 0.08);
-    }
-
-    .contact-link img {
-      width: 28px;
-      height: 28px;
-      object-fit: contain;
-      display: block;
-    }
-
+    
     .footer-contact {
       margin-top: 1.2rem;
       background: linear-gradient(180deg, #0d6b34 0%, var(--accent) 100%);
@@ -440,24 +398,6 @@
       <div id="result" class="result"></div>
       <div id="price" class="result-price"></div>
       <a id="wa" class="wa" target="_blank" rel="noreferrer">تأكيد عبر واتساب</a>
-
-      <div id="contactBlock" class="contact-block">
-        <div class="contact-title">للتواصل معنا:</div>
-        <div class="contact-icons">
-          <a class="contact-link" href="tel:0779605047" aria-label="اتصال">
-            <img src="https://drive.google.com/thumbnail?id=1DctrtB5ZOuZaY_0uyGZNCoFEwVnPoumg&sz=w200" alt="اتصال">
-          </a>
-          <a class="contact-link" href="https://wa.me/962779605047" target="_blank" rel="noreferrer" aria-label="واتساب">
-            <img src="https://drive.google.com/thumbnail?id=1iNhEgW9xdkgsfIEJ376YLbRnJN_YvTpC&sz=w200" alt="واتساب">
-          </a>
-          <a class="contact-link" href="https://www.instagram.com/50arena" target="_blank" rel="noreferrer" aria-label="انستغرام">
-            <img src="https://drive.google.com/thumbnail?id=1np2u6hKRIBj9HPNq9NoXRYSi3utRzMVe&sz=w200" alt="انستغرام">
-          </a>
-          <a class="contact-link" href="https://www.facebook.com/50arena" target="_blank" rel="noreferrer" aria-label="فيسبوك">
-            <img src="https://drive.google.com/thumbnail?id=1tl_M8byvEU05qa0z6U6ahslP-yCxLrxX&sz=w200" alt="فيسبوك">
-          </a>
-        </div>
-      </div>
     </div>
   </div>
 
@@ -504,7 +444,6 @@
     const result = document.getElementById("result");
     const price = document.getElementById("price");
     const wa = document.getElementById("wa");
-    const contactBlock = document.getElementById("contactBlock");
     const statusBox = document.getElementById("status");
     const loadingBox = document.getElementById("loading");
     const slotHint = document.getElementById("slotHint");
@@ -531,7 +470,6 @@
       price.textContent = "";
       wa.style.display = "none";
       wa.href = "#";
-      contactBlock.style.display = "none";
     }
 
     function normalizeJordanPhoneLocal(phone) {
@@ -695,7 +633,6 @@ if (!response.ok) {
         price.style.display = "block";
         wa.href = "https://wa.me/" + data.arenaWhatsappNumber + "?text=" + encodeURIComponent(data.whatsappText);
         wa.style.display = "block";
-        contactBlock.style.display = "block";
         wa.scrollIntoView({ behavior: "smooth", block: "center" });
       } catch (error) {
         setLoading(false);
