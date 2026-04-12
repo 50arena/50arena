@@ -19,7 +19,8 @@ const {
   ensureSheetHeader,
   getCalendarClient,
   getRequiredEnv,
-  hasGoogleCredentials
+  hasGoogleCredentials,
+  createCancellationToken
 } = require("./lib/google");
 
 module.exports = async function handler(req, res) {
@@ -158,6 +159,17 @@ module.exports = async function handler(req, res) {
       throw new Error("فشل حفظ الحجز في Google Sheets وتم التراجع عن حدث التقويم");
     }
 
+    const cancelToken = createCancellationToken({
+      eventId: created.data.id || "",
+      phone: phoneInternational,
+      date
+    });
+
+    const baseUrl =
+      cleanString(process.env.PUBLIC_BASE_URL) ||
+      `${req.headers["x-forwarded-proto"] || "https"}://${req.headers.host}`;
+    const cancelUrl = `${baseUrl}/cancel.html?token=${encodeURIComponent(cancelToken)}`;
+
     const whatsappText = [
       `تأكيد حجز \u200E50 Arena\u200E`,
       `الاسم: ${name}`,
@@ -166,7 +178,10 @@ module.exports = async function handler(req, res) {
       `الوقت: ${timeText}`,
       `المدة: ${durationLabel}`,
       `السعر: ${price} دينار`,
-      `الملاحظات: ${notes || "-"}`
+      `الملاحظات: ${notes || "-"}`,
+      "",
+      "إذا أردت إلغاء الحجز استخدم الرابط التالي:",
+      cancelUrl
     ].join("\n");
 
     return res.status(200).json({
@@ -182,6 +197,7 @@ module.exports = async function handler(req, res) {
         notes: notes || "-"
       },
       whatsappText,
+      cancelUrl,
       arenaWhatsappNumber: CONFIG.ARENA_WHATSAPP_NUMBER
     });
   } catch (error) {
