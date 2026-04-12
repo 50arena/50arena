@@ -599,7 +599,7 @@
 
       try {
         const response = await fetch("/api/slots?date=" + encodeURIComponent(date) + "&durationMinutes=" + encodeURIComponent(duration));
-        const data = await response.json();
+        const raw = await response.text(); let data;  try {   data = JSON.parse(raw); } catch (e) {   data = { error: raw || "تعذر تنفيذ الحجز" }; }
 
         setLoading(false);
         slotSelect.innerHTML = "";
@@ -671,7 +671,7 @@
           body: JSON.stringify(payload)
         });
 
-        const data = await response.json();
+        const raw = await response.text(); let data;  try {   data = JSON.parse(raw); } catch (e) {   data = { error: raw || "تعذر تنفيذ الحجز" }; }
         setLoading(false);
 
         if (!response.ok) {
@@ -700,7 +700,7 @@
 
       try {
         const response = await fetch("/api/settings");
-        const data = await response.json();
+        const raw = await response.text(); let data;  try {   data = JSON.parse(raw); } catch (e) {   data = { error: raw || "تعذر تنفيذ الحجز" }; }
         setLoading(false);
 
         if (!response.ok) {
