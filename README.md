@@ -1,16 +1,38 @@
-## Hi there 👋
+# 50 Arena
 
-<!--
-**50arena/50arena** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
+موقع حجز ملعب 50 Arena، يعمل على Vercel باستخدام Serverless Functions، مع ربط Google Calendar وGoogle Sheets.
 
-Here are some ideas to get you started:
+## المميزات
 
-- 🔭 I’m currently working on ...
-- 🌱 I’m currently learning ...
-- 👯 I’m looking to collaborate on ...
-- 🤔 I’m looking for help with ...
-- 💬 Ask me about ...
-- 📫 How to reach me: ...
-- 😄 Pronouns: ...
-- ⚡ Fun fact: ...
--->
+- واجهة عربية
+- خط Tajawal
+- عرض المواعيد المتاحة
+- الحجز حسب المدة
+- إضافة الحجز إلى Google Calendar
+- إضافة الحجز إلى Google Sheets
+- ملخص حجز للمستخدم
+- زر تأكيد عبر واتساب
+- جاهز للنشر على Vercel
+
+## التقنيات المستخدمة
+
+- HTML / CSS / JavaScript
+- Vercel Serverless Functions
+- Node.js
+- Google Calendar API
+- Google Sheets API
+- Service Account
+
+## هيكل المشروع
+
+```text
+api/
+  booking.js
+  settings.js
+  slots.js
+  lib/
+    google.js
+
+index.html
+package.json
+README.md
