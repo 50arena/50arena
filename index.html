@@ -4,12 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>50 Arena</title>
-
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-
   <style>
     * { box-sizing: border-box; }
 
@@ -116,14 +113,6 @@
       gap: 0.85rem;
     }
 
-    .grid.two {
-      grid-template-columns: 1fr;
-    }
-
-    .slot-group {
-      margin-top: 0.9rem;
-    }
-
     label {
       display: block;
       font-size: 1rem;
@@ -142,7 +131,7 @@
     }
 
     input:focus, select:focus, textarea:focus {
-      outline: 2px solid rgba(242, 201, 76, 0.25);
+      outline: 2px solid rgba(182, 138, 60, 0.22);
       border-color: var(--accent-2);
     }
 
@@ -154,12 +143,12 @@
     .hint {
       font-size: 0.86rem;
       color: var(--muted);
-      margin-top: 0.35rem;
+      margin-top: -0.25rem;
     }
 
     .result {
       display: none;
-      background: #f8fdf9;
+      background: #f8f5ef;
       border: 1px dashed var(--accent-2);
       padding: 1rem;
       border-radius: 1rem;
@@ -230,70 +219,6 @@
       color: var(--muted);
       text-align: center;
     }
-    
-    .footer-contact {
-      margin-top: 1.2rem;
-      background: linear-gradient(180deg, #0d6b34 0%, var(--accent) 100%);
-      padding: 2rem 1rem 6.5rem;
-      color: #fff;
-      text-align: center;
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
-    }
-
-    .footer-contact .contact-title {
-      color: #fff;
-      font-size: 1.1rem;
-      line-height: 1.8;
-      margin-bottom: 1rem;
-      text-align: center;
-    }
-
-    .footer-icons {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 1.1rem;
-      flex-wrap: wrap;
-    }
-
-    .footer-icon {
-      width: 46px;
-      height: 46px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      color: #ffffff;
-      text-decoration: none;
-      font-size: 28px;
-      transition: transform 0.2s ease, opacity 0.2s ease;
-    }
-
-    .footer-icon:hover {
-      transform: translateY(-2px);
-      opacity: 0.9;
-    }
-
-    .floating-wa {
-      position: fixed;
-      left: 1rem;
-      bottom: 5.7rem;
-      width: 56px;
-      height: 56px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      background: transparent;
-      box-shadow: none;
-      z-index: 1001;
-      text-decoration: none;
-    }
-    
-    .floating-wa i {
-      font-size: 52px;
-      color: #25D366 !important;
-      line-height: 1;
-      display: block;
-    }
 
     .fixed-btn {
       position: fixed;
@@ -304,14 +229,13 @@
       background: rgba(255, 255, 255, 0.97);
       backdrop-filter: blur(12px);
       border-top: 1px solid rgba(215, 227, 219, 0.9);
-      z-index: 1000;
     }
 
     .fixed-btn button {
-      width: min(720px, calc(100% - 2rem));
+      width: min(720px, 100%);
       display: block;
       margin: 0 auto;
-      height: 3.8rem;
+      height: 3.6rem;
       font-size: 1.1rem;
       background: linear-gradient(135deg, var(--accent) 0%, #18704a 100%);
       color: #fff;
@@ -327,19 +251,123 @@
       cursor: wait;
     }
 
+    .contact-block {
+      display: none;
+      margin-top: 1rem;
+      padding: 1rem;
+      border-radius: 1.25rem;
+      background: #f7fbf8;
+      border: 1px solid var(--line);
+      text-align: center;
+    }
+
+    .contact-title {
+      font-size: 1rem;
+      font-weight: 800;
+      margin-bottom: 0.9rem;
+    }
+
+    .contact-icons {
+      display: flex;
+      justify-content: center;
+      gap: 0.85rem;
+      flex-wrap: wrap;
+    }
+
+    .contact-link {
+      width: 60px;
+      height: 60px;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: #ffffff;
+      border: 1px solid var(--line);
+      box-shadow: 0 8px 20px rgba(15, 79, 51, 0.08);
+    }
+
+    .contact-link img {
+      width: 28px;
+      height: 28px;
+      object-fit: contain;
+      display: block;
+    }
+
+    .footer-contact {
+      margin-top: 1.2rem;
+      background: linear-gradient(180deg, #0d6b34 0%, var(--accent) 100%);
+      border-radius: 0;
+      padding: 2rem 1rem 6.5rem;
+      color: #fff;
+      text-align: center;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    }
+
+    .footer-contact .contact-title {
+      color: #fff;
+      font-size: 1.1rem;
+      line-height: 1.9;
+      margin-bottom: 1rem;
+      max-width: 280px;
+      margin-inline: auto;
+    }
+
+    .footer-contact .contact-icons {
+      gap: 0.85rem;
+    }
+
+    .footer-contact .contact-link {
+      width: auto;
+      min-width: 96px;
+      padding: 0 1rem;
+      height: 50px;
+      border-radius: 1.15rem;
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 800;
+      gap: 0.45rem;
+      box-shadow: none;
+      text-align: center;
+    }
+
+    .footer-contact .contact-link img {
+      width: 18px;
+      height: 18px;
+    }
+
+    .footer-contact .contact-label {
+      display: inline-block;
+      color: var(--accent);
+      font-size: 0.88rem;
+      text-align: center;
+    }
+
+    .app-footer {
+      text-align: center;
+      padding: 1rem 0 0;
+      color: #fff;
+      font-weight: 800;
+      font-size: 1rem;
+    }
+
+    @media (min-width: 700px) {
+      .grid.two {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
     @media (max-width: 520px) {
       .hero-shell {
         padding-top: 2rem;
       }
 
-      .footer-icons {
-        gap: 0.9rem;
+      .footer-contact .contact-icons {
+        gap: 0.7rem;
       }
 
-      .footer-icon {
-        width: 42px;
-        height: 42px;
-        font-size: 24px;
+      .footer-contact .contact-link {
+        min-width: 88px;
+        padding: 0 0.8rem;
       }
     }
   </style>
@@ -357,14 +385,13 @@
 
   <div class="page">
     <div class="card">
-      <div class="hero-title">احجز موعدك</div>
+      <div class="hero-title">احجز موعدك من 12 ظهرًا حتى 12 ليلًا</div>
 
       <div class="grid two">
         <div>
           <label for="date">التاريخ</label>
           <input type="date" id="date">
         </div>
-
         <div>
           <label for="duration">مدة الحجز</label>
           <select id="duration"></select>
@@ -372,7 +399,7 @@
       </div>
 
       <div class="grid">
-        <div class="slot-group">
+        <div>
           <label for="slot">المواعيد المتاحة</label>
           <select id="slot"></select>
           <div id="slotHint" class="hint"></div>
@@ -399,34 +426,49 @@
       <div id="result" class="result"></div>
       <div id="price" class="result-price"></div>
       <a id="wa" class="wa" target="_blank" rel="noreferrer">تأكيد عبر واتساب</a>
+
+      <div id="contactBlock" class="contact-block">
+        <div class="contact-title">للتواصل معنا:</div>
+        <div class="contact-icons">
+          <a class="contact-link" href="tel:0779605047" aria-label="اتصال">
+            <img src="https://drive.google.com/thumbnail?id=1DctrtB5ZOuZaY_0uyGZNCoFEwVnPoumg&sz=w200" alt="اتصال">
+          </a>
+          <a class="contact-link" href="https://wa.me/962779605047" target="_blank" rel="noreferrer" aria-label="واتساب">
+            <img src="https://drive.google.com/thumbnail?id=1iNhEgW9xdkgsfIEJ376YLbRnJN_YvTpC&sz=w200" alt="واتساب">
+          </a>
+          <a class="contact-link" href="https://www.instagram.com/50arena" target="_blank" rel="noreferrer" aria-label="انستغرام">
+            <img src="https://drive.google.com/thumbnail?id=1np2u6hKRIBj9HPNq9NoXRYSi3utRzMVe&sz=w200" alt="انستغرام">
+          </a>
+          <a class="contact-link" href="https://www.facebook.com/50arena" target="_blank" rel="noreferrer" aria-label="فيسبوك">
+            <img src="https://drive.google.com/thumbnail?id=1tl_M8byvEU05qa0z6U6ahslP-yCxLrxX&sz=w200" alt="فيسبوك">
+          </a>
+        </div>
+      </div>
     </div>
   </div>
 
   <div class="footer-contact">
-    <div class="contact-title">ننتظرك انت وفريقك في <span dir="ltr">50 Arena</span></div>
-
-    <div class="footer-icons">
-      <a class="footer-icon" href="tel:0779605047" aria-label="اتصال">
-        <i class="fa-solid fa-phone"></i>
+    <div class="contact-title">ننتظرك انت<br>وفريقك في 50 Arena</div>
+    <div class="contact-icons">
+      <a class="contact-link" href="https://www.facebook.com/50arena" target="_blank" rel="noreferrer" aria-label="Facebook">
+        <img src="https://drive.google.com/thumbnail?id=1tl_M8byvEU05qa0z6U6ahslP-yCxLrxX&sz=w200" alt="Facebook">
+        <span class="contact-label">Facebook</span>
       </a>
-
-      <a class="footer-icon" href="https://wa.me/962779605047" target="_blank" rel="noreferrer" aria-label="واتساب">
-        <i class="fa-brands fa-whatsapp"></i>
+      <a class="contact-link" href="https://www.instagram.com/50arena" target="_blank" rel="noreferrer" aria-label="Instagram">
+        <img src="https://drive.google.com/thumbnail?id=1np2u6hKRIBj9HPNq9NoXRYSi3utRzMVe&sz=w200" alt="Instagram">
+        <span class="contact-label">Instagram</span>
       </a>
-
-      <a class="footer-icon" href="https://www.instagram.com/50arena" target="_blank" rel="noreferrer" aria-label="Instagram">
-        <i class="fa-brands fa-instagram"></i>
+      <a class="contact-link" href="https://wa.me/962779605047" target="_blank" rel="noreferrer" aria-label="واتساب">
+        <img src="https://drive.google.com/thumbnail?id=1iNhEgW9xdkgsfIEJ376YLbRnJN_YvTpC&sz=w200" alt="واتساب">
+        <span class="contact-label">واتساب</span>
       </a>
-
-      <a class="footer-icon" href="https://www.facebook.com/50arena" target="_blank" rel="noreferrer" aria-label="Facebook">
-        <i class="fa-brands fa-facebook-f"></i>
+      <a class="contact-link" href="tel:0779605047" aria-label="اتصال">
+        <img src="https://drive.google.com/thumbnail?id=1DctrtB5ZOuZaY_0uyGZNCoFEwVnPoumg&sz=w200" alt="اتصال">
+        <span class="contact-label">اتصال</span>
       </a>
     </div>
+    <div class="app-footer"></div>
   </div>
-
-  <a class="floating-wa" href="https://wa.me/962779605047" target="_blank" rel="noreferrer" aria-label="واتساب">
-  <i class="fa-brands fa-whatsapp"></i>
-</a>
 
   <div class="fixed-btn">
     <button id="bookBtn">تثبيت الحجز</button>
@@ -445,6 +487,7 @@
     const result = document.getElementById("result");
     const price = document.getElementById("price");
     const wa = document.getElementById("wa");
+    const contactBlock = document.getElementById("contactBlock");
     const statusBox = document.getElementById("status");
     const loadingBox = document.getElementById("loading");
     const slotHint = document.getElementById("slotHint");
@@ -471,6 +514,7 @@
       price.textContent = "";
       wa.style.display = "none";
       wa.href = "#";
+      contactBlock.style.display = "none";
     }
 
     function normalizeJordanPhoneLocal(phone) {
@@ -530,7 +574,7 @@
       slotHint.textContent = "";
 
       if (!date || !duration) {
-        fillSlotPlaceholder("اختر التاريخ ومدة الحجز أولاً");
+        fillSlotPlaceholder("اختر التاريخ ومدة الحجز أولًا");
         return;
       }
 
@@ -538,7 +582,7 @@
 
       try {
         const response = await fetch("/api/slots?date=" + encodeURIComponent(date) + "&durationMinutes=" + encodeURIComponent(duration));
-        const raw = await response.text(); let data;  try {   data = JSON.parse(raw); } catch (e) {   data = { error: raw || "تعذر تنفيذ الحجز" }; }
+        const data = await response.json();
 
         setLoading(false);
         slotSelect.innerHTML = "";
@@ -552,7 +596,7 @@
         const slots = Array.isArray(data.slots) ? data.slots : [];
         if (!slots.length) {
           fillSlotPlaceholder("لا توجد مواعيد متاحة");
-          slotHint.textContent = data.notice || "يرجى اختيار تاريخ أو مدة مختلفة";
+          slotHint.textContent = "يرجى اختيار تاريخ أو مدة مختلفة";
           return;
         }
 
@@ -605,35 +649,27 @@
 
       try {
         const response = await fetch("/api/booking", {
-  method: "POST",
-  headers: { "Content-Type": "application/json" },
-  body: JSON.stringify(payload)
-});
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
+        });
 
-const raw = await response.text();
-let data;
+        const data = await response.json();
+        setLoading(false);
 
-try {
-  data = JSON.parse(raw);
-} catch (e) {
-  data = { error: raw || "تعذر تنفيذ الحجز" };
-}
+        if (!response.ok) {
+          showStatus(data.error || "تعذر تنفيذ الحجز", "error");
+          return;
+        }
 
-setLoading(false);
-
-if (!response.ok) {
-  showStatus(data.error || "تعذر تنفيذ الحجز", "error");
-  return;
-}
-
-
-        showStatus(data.message || "تم تأكيد الحجز بنجاح، شكرًا لاختيارك ملعب \u200E50 Arena\u200E", "success");
+        showStatus(data.message || "تم تأكيد الحجز بنجاح", "success");
         renderBookingSummary(data.bookingDetails);
         price.textContent = data.bookingDetails.price;
         result.style.display = "block";
         price.style.display = "block";
         wa.href = "https://wa.me/" + data.arenaWhatsappNumber + "?text=" + encodeURIComponent(data.whatsappText);
         wa.style.display = "block";
+        contactBlock.style.display = "block";
         wa.scrollIntoView({ behavior: "smooth", block: "center" });
       } catch (error) {
         setLoading(false);
@@ -642,12 +678,12 @@ if (!response.ok) {
     }
 
     async function init() {
-      fillSlotPlaceholder("اختر التاريخ ومدة الحجز أولاً");
+      fillSlotPlaceholder("اختر التاريخ ومدة الحجز أولًا");
       setLoading(true);
 
       try {
         const response = await fetch("/api/settings");
-        const raw = await response.text(); let data;  try {   data = JSON.parse(raw); } catch (e) {   data = { error: raw || "تعذر تنفيذ الحجز" }; }
+        const data = await response.json();
         setLoading(false);
 
         if (!response.ok) {
