@@ -353,7 +353,7 @@ async function ensureSheetHeader() {
 
   const headerResponse = await sheets.spreadsheets.values.get({
     spreadsheetId: env.sheetId,
-    range: "Bookings!A1:H1"
+    range: "Bookings!A1:I1"
   });
 
   const values = headerResponse.data.values || [];
@@ -363,10 +363,11 @@ async function ensureSheetHeader() {
 
   await sheets.spreadsheets.values.update({
     spreadsheetId: env.sheetId,
-    range: "Bookings!A1:H1",
+    range: "Bookings!A1:I1",
     valueInputOption: "RAW",
     requestBody: {
       values: [[
+        "Created At",
         "Name",
         "Phone",
         "Date",
@@ -387,10 +388,11 @@ async function appendBookingToSheet(row) {
 
   await sheets.spreadsheets.values.append({
     spreadsheetId: env.sheetId,
-    range: "Bookings!A:H",
+    range: "Bookings!A:I",
     valueInputOption: "USER_ENTERED",
     requestBody: {
       values: [[
+        row.createdAt,
         row.name,
         row.phone,
         row.date,
