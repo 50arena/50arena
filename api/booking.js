@@ -168,7 +168,7 @@ module.exports = async function handler(req, res) {
     const baseUrl =
       cleanString(process.env.PUBLIC_BASE_URL) ||
       `${req.headers["x-forwarded-proto"] || "https"}://${req.headers.host}`;
-    const cancelUrl = `${baseUrl}/cancel.html?token=${encodeURIComponent(cancelToken)}`;
+    const cancelUrl = `${baseUrl}/cancel?token=${encodeURIComponent(cancelToken)}`;
 
     const whatsappText = [
       `تأكيد حجز \u200E50 Arena\u200E`,
