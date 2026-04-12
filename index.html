@@ -1,450 +1,605 @@
 <!DOCTYPE html>
 <html dir="rtl" lang="ar">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-
-<title>50 Arena</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
-
-<style>
-* { box-sizing: border-box; }
-
-body {
-  margin: 0;
-  font-family: 'Tajawal', sans-serif;
-  background: #fff;
-}
-
-/* HEADER */
-.app-header {
-  background: #fff;
-  text-align: center;
-  padding: 1.5rem 0.5rem;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-}
-
-.app-logo {
-  width: 220px;
-  max-width: 80%;
-  display: block;
-  margin: 0 auto 1rem;
-}
-
-.app-title {
-  font-size: 2rem;
-  font-weight: 900;
-}
-
-.app-slogan {
-  font-size: 1rem;
-  color: #666;
-  margin-top: 0.5rem;
-}
-
-.card {
-  padding: 1rem;
-  padding-bottom: 6rem;
-}
-
-.hero-title {
-  text-align: center;
-  font-size: 1rem;
-  margin-bottom: 1rem;
-}
-
-label {
-  font-size: 1.1rem;
-  font-weight: 900;
-}
-
-input, select, textarea {
-  width: 100%;
-  padding: 1rem;
-  font-size: 1rem;
-  margin-top: 0.4rem;
-  margin-bottom: 0.6rem;
-  border-radius: 1rem;
-  border: 1px solid #ddd;
-  font-family: inherit;
-}
-
-textarea {
-  min-height: 4rem;
-}
-
-.fixed-btn {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  padding: 0.5rem;
-  background: #fff;
-  box-shadow: 0 -4px 16px rgba(0,0,0,0.08);
-}
-
-.fixed-btn button {
-  width: 100%;
-  height: 3.4rem;
-  font-size: 1.1rem;
-  background: black;
-  color: white;
-  border: none;
-  border-radius: 1rem;
-  font-family: inherit;
-}
-
-.result {
-  display: none;
-  background: #f5f5f5;
-  padding: 1rem;
-  border-radius: 1rem;
-  margin-top: 1rem;
-}
-
-.result ul {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.result li {
-  margin-bottom: 0.4rem;
-}
-
-.result-price {
-  display: none;
-  font-size: 2rem;
-  color: red;
-  text-align: center;
-  margin-top: 0.5rem;
-  font-weight: 800;
-}
-
-.wa {
-  display: none;
-  background: #25D366;
-  color: #fff;
-  text-align: center;
-  padding: 1rem;
-  margin-top: 0.5rem;
-  border-radius: 1rem;
-  text-decoration: none;
-  font-size: 1rem;
-}
-
-.status {
-  display: none;
-  margin-top: 0.8rem;
-  padding: 0.8rem;
-  border-radius: 0.8rem;
-  font-size: 0.9rem;
-}
-
-.status.success {
-  display: block;
-  background: #e9f8ee;
-  color: #156b2e;
-}
-
-.status.error {
-  display: block;
-  background: #fdeeee;
-  color: #b00020;
-}
-
-.loading {
-  display: none;
-  margin-top: 0.6rem;
-  font-size: 0.8rem;
-  color: #666;
-  text-align: center;
-}
-
-.hint {
-  font-size: 0.7rem;
-  color: #777;
-  margin-top: -0.2rem;
-  margin-bottom: 0.4rem;
-}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>50 Arena</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; }
+    :root {
+      --bg: #f4f8f3;
+      --surface: #ffffff;
+      --text: #113322;
+      --muted: #597066;
+      --line: #d7e3db;
+      --accent: #0f4f33;
+      --accent-2: #f2c94c;
+      --success-bg: #e9f8ee;
+      --success-text: #156b2e;
+      --error-bg: #fdeeee;
+      --error-text: #b00020;
+      --wa: #25D366;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Tajawal", sans-serif;
+      background:
+        radial-gradient(circle at top, rgba(15, 79, 51, 0.16), transparent 30%),
+        linear-gradient(180deg, #ffffff 0%, var(--bg) 100%);
+      color: var(--text);
+    }
+    .page {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 0 1rem 7rem;
+    }
+    .app-header {
+      text-align: center;
+      padding: 2rem 0 1rem;
+    }
+    .app-logo {
+      width: min(240px, 80%);
+      display: block;
+      margin: 0 auto 1rem;
+      filter: drop-shadow(0 10px 22px rgba(0, 0, 0, 0.08));
+    }
+    .app-title {
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 900;
+      letter-spacing: 0.02em;
+    }
+    .app-slogan {
+      margin-top: 0.75rem;
+      color: var(--muted);
+      font-size: 1.05rem;
+      font-weight: 500;
+    }
+    .card {
+      background: rgba(255, 255, 255, 0.97);
+      border: 1px solid rgba(215, 227, 219, 0.95);
+      border-radius: 1.5rem;
+      padding: 1.25rem;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 12px 28px rgba(15, 79, 51, 0.08);
+    }
+    .hero-title {
+      text-align: center;
+      font-size: 1.15rem;
+      font-weight: 800;
+      margin-bottom: 1rem;
+    }
+    .grid {
+      display: grid;
+      gap: 0.85rem;
+    }
+    label {
+      display: block;
+      font-size: 1rem;
+      font-weight: 800;
+      margin-bottom: 0.35rem;
+    }
+    input, select, textarea {
+      width: 100%;
+      padding: 0.95rem 1rem;
+      font-size: 1rem;
+      border-radius: 1rem;
+      border: 1px solid var(--line);
+      font-family: inherit;
+      background: #fff;
+    }
+    input:focus, select:focus, textarea:focus {
+      outline: 2px solid rgba(242, 201, 76, 0.25);
+      border-color: var(--accent-2);
+    }
+    textarea {
+      min-height: 4.5rem;
+      resize: vertical;
+    }
+    .hint {
+      font-size: 0.86rem;
+      color: var(--muted);
+      margin-top: -0.25rem;
+    }
+    .result {
+      display: none;
+      background: #f8fdf9;
+      border: 1px dashed var(--accent-2);
+      padding: 1rem;
+      border-radius: 1rem;
+      margin-top: 1rem;
+    }
+    .result ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      gap: 0.45rem;
+    }
+    .result-price {
+      display: none;
+      font-size: 2rem;
+      color: #bc2f10;
+      text-align: center;
+      margin-top: 0.85rem;
+      font-weight: 900;
+    }
+    .wa {
+      display: none;
+      background: var(--wa);
+      color: #fff;
+      text-align: center;
+      padding: 1rem;
+      margin-top: 0.75rem;
+      border-radius: 1rem;
+      text-decoration: none;
+      font-size: 1rem;
+      font-weight: 800;
+    }
+    .status {
+      display: none;
+      margin-top: 0.85rem;
+      padding: 0.9rem;
+      border-radius: 1rem;
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+    .status.success {
+      display: block;
+      background: var(--success-bg);
+      color: var(--success-text);
+    }
+    .status.error {
+      display: block;
+      background: var(--error-bg);
+      color: var(--error-text);
+    }
+    .status.info {
+      display: block;
+      background: #fff6df;
+      color: #7d5c10;
+    }
+    .loading {
+      display: none;
+      margin-top: 0.75rem;
+      font-size: 0.92rem;
+      color: var(--muted);
+      text-align: center;
+    }
+    .fixed-btn {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      padding: 0.75rem 1rem max(0.75rem, env(safe-area-inset-bottom));
+      background: rgba(255, 255, 255, 0.97);
+      backdrop-filter: blur(12px);
+      border-top: 1px solid rgba(215, 227, 219, 0.9);
+    }
+    .fixed-btn button {
+      width: min(720px, 100%);
+      display: block;
+      margin: 0 auto;
+      height: 3.6rem;
+      font-size: 1.1rem;
+      background: linear-gradient(135deg, var(--accent) 0%, #18704a 100%);
+      color: #fff;
+      border: none;
+      border-radius: 1rem;
+      font-family: inherit;
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .fixed-btn button:disabled {
+      opacity: 0.6;
+      cursor: wait;
+    }
+    .contact-block {
+      display: none;
+      margin-top: 1rem;
+      padding: 1rem;
+      border-radius: 1.25rem;
+      background: #f7fbf8;
+      border: 1px solid var(--line);
+      text-align: center;
+    }
+    .contact-title {
+      font-size: 1rem;
+      font-weight: 800;
+      margin-bottom: 0.9rem;
+    }
+    .contact-icons {
+      display: flex;
+      justify-content: center;
+      gap: 0.85rem;
+      flex-wrap: wrap;
+    }
+    .contact-link {
+      width: 60px;
+      height: 60px;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: #ffffff;
+      border: 1px solid var(--line);
+      box-shadow: 0 8px 20px rgba(15, 79, 51, 0.08);
+    }
+    .contact-link img {
+      width: 28px;
+      height: 28px;
+      object-fit: contain;
+      display: block;
+    }
+    .floating-wa {
+      position: fixed;
+      left: 1rem;
+      bottom: 5.7rem;
+      width: 52px;
+      height: 52px;
+      border-radius: 999px;
+      background: #25D366;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 12px 24px rgba(37, 211, 102, 0.28);
+      z-index: 30;
+    }
+    .floating-wa img {
+      width: 52px;
+      height: 52px;
+      border-radius: 999px;
+      display: block;
+    }
+    .app-footer {
+      text-align: center;
+      padding: 1.5rem 0 0.75rem;
+      color: var(--accent);
+      font-weight: 800;
+      font-size: 1rem;
+    }
+    @media (min-width: 700px) {
+      .grid.two {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+  </style>
 </head>
-
 <body>
+  <div class="page">
+    <div class="app-header">
+      <img class="app-logo" src="https://drive.google.com/thumbnail?id=1P20NGu_6cNv5t5-KZ8gFDabU-IJdlGjs&sz=w1000" alt="50 Arena Logo">
+      <div class="app-title" dir="ltr">50 Arena</div>
+      <div class="app-slogan">أول ملعب 5×5 بمواصفات فيفا في الطفيلة</div>
+    </div>
 
-<div class="app-header">
-  <img class="app-logo"
-  src="https://drive.google.com/thumbnail?id=1bWl-_qJJBoH1VupMst_K1JFZfh3JpRhW&sz=w1000"
-  alt="50 Arena Logo">
+    <div class="card">
+      <div class="hero-title">احجز موعدك من 12 ظهرًا حتى 12 ليلًا</div>
 
-  <div class="app-title" dir="ltr">50 Arena</div>
+      <div class="grid two">
+        <div>
+          <label for="date">التاريخ</label>
+          <input type="date" id="date">
+        </div>
+        <div>
+          <label for="duration">مدة الحجز</label>
+          <select id="duration"></select>
+        </div>
+      </div>
 
-  <div class="app-slogan">
-    أول ملعب 5×5 بمواصفات فيفا في الطفيلة
+      <div class="grid">
+        <div>
+          <label for="slot">المواعيد المتاحة</label>
+          <select id="slot"></select>
+          <div id="slotHint" class="hint"></div>
+        </div>
+
+        <div>
+          <label for="name">الاسم</label>
+          <input id="name" type="text" placeholder="اسم صاحب الحجز">
+        </div>
+
+        <div>
+          <label for="phone">رقم الهاتف</label>
+          <input id="phone" type="tel" placeholder="07XXXXXXXX">
+        </div>
+
+        <div>
+          <label for="notes">ملاحظات</label>
+          <textarea id="notes" placeholder="أي تفاصيل إضافية إن وجدت"></textarea>
+        </div>
+      </div>
+
+      <div id="loading" class="loading">جارٍ التحميل...</div>
+      <div id="status" class="status"></div>
+      <div id="result" class="result"></div>
+      <div id="price" class="result-price"></div>
+      <a id="wa" class="wa" target="_blank" rel="noreferrer">تأكيد عبر واتساب</a>
+
+      <div id="contactBlock" class="contact-block">
+        <div class="contact-title">للتواصل معنا:</div>
+        <div class="contact-icons">
+          <a class="contact-link" href="tel:0779605047" aria-label="اتصال">
+            <img src="https://drive.google.com/thumbnail?id=1DctrtB5ZOuZaY_0uyGZNCoFEwVnPoumg&sz=w200" alt="اتصال">
+          </a>
+          <a class="contact-link" href="https://wa.me/962779605047" target="_blank" rel="noreferrer" aria-label="واتساب">
+            <img src="https://drive.google.com/thumbnail?id=1iNhEgW9xdkgsfIEJ376YLbRnJN_YvTpC&sz=w200" alt="واتساب">
+          </a>
+          <a class="contact-link" href="https://www.instagram.com/50arena" target="_blank" rel="noreferrer" aria-label="انستغرام">
+            <img src="https://drive.google.com/thumbnail?id=1np2u6hKRIBj9HPNq9NoXRYSi3utRzMVe&sz=w200" alt="انستغرام">
+          </a>
+          <a class="contact-link" href="https://www.facebook.com/50arena" target="_blank" rel="noreferrer" aria-label="فيسبوك">
+            <img src="https://drive.google.com/thumbnail?id=1tl_M8byvEU05qa0z6U6ahslP-yCxLrxX&sz=w200" alt="فيسبوك">
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="app-footer">ننتظرك أنت وفريقك في 50 Arena</div>
   </div>
-</div>
 
-<div class="card">
+  <a class="floating-wa" href="https://wa.me/962779605047" target="_blank" rel="noreferrer" aria-label="واتساب">
+    <img src="https://drive.google.com/thumbnail?id=16bBKJooPWQb0QBBOktytLBVDMi8rMJiP&sz=w200" alt="واتساب">
+  </a>
 
-  <div class="hero-title">احجز موعدك</div>
+  <div class="fixed-btn">
+    <button id="bookBtn">تثبيت الحجز</button>
+  </div>
 
-  <label for="date">التاريخ</label>
-  <input type="date" id="date">
+  <script>
+    const dateInput = document.getElementById("date");
+    const durationSelect = document.getElementById("duration");
+    const slotSelect = document.getElementById("slot");
+    const nameInput = document.getElementById("name");
+    const phoneInput = document.getElementById("phone");
+    const notesInput = document.getElementById("notes");
+    const bookBtn = document.getElementById("bookBtn");
+    const result = document.getElementById("result");
+    const price = document.getElementById("price");
+    const wa = document.getElementById("wa");
+    const contactBlock = document.getElementById("contactBlock");
+    const statusBox = document.getElementById("status");
+    const loadingBox = document.getElementById("loading");
+    const slotHint = document.getElementById("slotHint");
 
-  <label for="duration">مدة الحجز</label>
-  <select id="duration"></select>
-
-  <label for="slot">المواعيد المتاحة</label>
-  <select id="slot"></select>
-  <div id="slotHint" class="hint"></div>
-
-  <label for="name">الاسم</label>
-  <input id="name" type="text">
-
-  <label for="phone">رقم الهاتف</label>
-  <input id="phone" type="tel" placeholder="07XXXXXXXX">
-
-  <label for="notes">ملاحظات</label>
-  <textarea id="notes"></textarea>
-
-  <div id="loading" class="loading">جارٍ التحميل...</div>
-  <div id="status" class="status"></div>
-
-  <div id="result" class="result"></div>
-  <div id="price" class="result-price"></div>
-
-  <a id="wa" class="wa" target="_blank">تأكيد عبر واتساب</a>
-</div>
-
-<div class="fixed-btn">
-  <button id="bookBtn">تثبيت الحجز</button>
-</div>
-
-<script>
-let settings = null;
-
-const dateInput = document.getElementById('date');
-const durationSelect = document.getElementById('duration');
-const slotSelect = document.getElementById('slot');
-const nameInput = document.getElementById('name');
-const phoneInput = document.getElementById('phone');
-const notesInput = document.getElementById('notes');
-const bookBtn = document.getElementById('bookBtn');
-const result = document.getElementById('result');
-const price = document.getElementById('price');
-const wa = document.getElementById('wa');
-const statusBox = document.getElementById('status');
-const loadingBox = document.getElementById('loading');
-const slotHint = document.getElementById('slotHint');
-
-function setLoading(show) {
-  loadingBox.style.display = show ? 'block' : 'none';
-  bookBtn.disabled = show;
-}
-
-function showStatus(message, type) {
-  statusBox.className = 'status ' + type;
-  statusBox.textContent = message;
-}
-
-function clearStatus() {
-  statusBox.className = 'status';
-  statusBox.textContent = '';
-}
-
-function hideResult() {
-  result.style.display = 'none';
-  result.innerHTML = '';
-  price.style.display = 'none';
-  price.textContent = '';
-  wa.style.display = 'none';
-  wa.href = '#';
-}
-
-function normalizeJordanPhoneLocal(phone) {
-  let cleaned = String(phone || '').replace(/[^\d+]/g, '');
-
-  if (cleaned.startsWith('+962')) {
-    cleaned = '0' + cleaned.substring(4);
-  } else if (cleaned.startsWith('962')) {
-    cleaned = '0' + cleaned.substring(3);
-  } else if (cleaned.startsWith('00962')) {
-    cleaned = '0' + cleaned.substring(5);
-  }
-
-  return cleaned;
-}
-
-function isValidJordanPhone(phone) {
-  const normalized = normalizeJordanPhoneLocal(phone);
-  return /^07[789]\d{7}$/.test(normalized);
-}
-
-async function loadSlots() {
-  const date = dateInput.value;
-  const duration = durationSelect.value;
-
-  hideResult();
-  clearStatus();
-
-  if (!date || !duration) {
-    slotSelect.innerHTML = '<option value="">اختر التاريخ ومدة الحجز أولاً</option>';
-    return;
-  }
-
-  setLoading(true);
-
-  try {
-    const response = await fetch(`/api/slots?date=${encodeURIComponent(date)}&durationMinutes=${encodeURIComponent(duration)}`);
-    const data = await response.json();
-
-    setLoading(false);
-    slotSelect.innerHTML = '';
-
-    if (!response.ok) {
-      showStatus(data.error || 'حدث خطأ أثناء تحميل المواعيد', 'error');
-      return;
+    function setLoading(show) {
+      loadingBox.style.display = show ? "block" : "none";
+      bookBtn.disabled = show;
     }
 
-    if (!data || !data.length) {
-      slotSelect.innerHTML = '<option value="">لا توجد مواعيد متاحة</option>';
-      slotHint.textContent = 'يرجى اختيار تاريخ أو مدة مختلفة';
-      return;
+    function showStatus(message, type) {
+      statusBox.className = "status " + type;
+      statusBox.textContent = message;
     }
 
-    const placeholder = document.createElement('option');
-    placeholder.value = '';
-    placeholder.textContent = 'اختر موعداً مناسباً';
-    slotSelect.appendChild(placeholder);
-
-    data.forEach(function(s) {
-      const o = document.createElement('option');
-      o.value = s.value;
-      o.textContent = s.label;
-      slotSelect.appendChild(o);
-    });
-
-    slotHint.textContent = 'تظهر هنا المواعيد المتاحة فقط';
-  } catch (error) {
-    setLoading(false);
-    showStatus('حدث خطأ أثناء تحميل المواعيد', 'error');
-  }
-}
-
-async function book() {
-  hideResult();
-  clearStatus();
-
-  const payload = {
-    date: dateInput.value,
-    durationMinutes: Number(durationSelect.value),
-    startIso: slotSelect.value,
-    name: nameInput.value.trim(),
-    phone: phoneInput.value.trim(),
-    notes: notesInput.value.trim()
-  };
-
-  if (!payload.date || !payload.durationMinutes || !payload.startIso || !payload.name || !payload.phone) {
-    showStatus('يرجى تعبئة جميع الحقول المطلوبة', 'error');
-    return;
-  }
-
-  if (!isValidJordanPhone(payload.phone)) {
-    showStatus('رقم الهاتف غير صحيح', 'error');
-    return;
-  }
-
-  setLoading(true);
-
-  try {
-    const response = await fetch('/api/booking', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload)
-    });
-
-    const res = await response.json();
-    setLoading(false);
-
-    if (!response.ok) {
-      showStatus(res.error || 'تعذر تنفيذ الحجز', 'error');
-      return;
+    function clearStatus() {
+      statusBox.className = "status";
+      statusBox.textContent = "";
     }
 
-    showStatus(res.message || 'تم تأكيد الحجز بنجاح', 'success');
-
-    result.innerHTML = `
-      <ul>
-        <li>الاسم: ${res.bookingDetails.name}</li>
-        <li>الهاتف: ${res.bookingDetails.phone}</li>
-        <li>التاريخ: ${res.bookingDetails.date}</li>
-        <li>الوقت: ${res.bookingDetails.time}</li>
-        <li>المدة: ${res.bookingDetails.duration}</li>
-        <li>الملاحظات: ${res.bookingDetails.notes}</li>
-      </ul>
-    `;
-
-    price.textContent = res.bookingDetails.price;
-    result.style.display = 'block';
-    price.style.display = 'block';
-
-    wa.href = 'https://wa.me/' + res.arenaWhatsappNumber + '?text=' + encodeURIComponent(res.whatsappText);
-    wa.style.display = 'block';
-
-    wa.scrollIntoView({ behavior: 'smooth' });
-  } catch (error) {
-    setLoading(false);
-    showStatus('تعذر تنفيذ الحجز', 'error');
-  }
-}
-
-async function init() {
-  setLoading(true);
-
-  try {
-    const response = await fetch('/api/settings');
-    const res = await response.json();
-
-    setLoading(false);
-
-    if (!response.ok) {
-      showStatus(res.error || 'تعذر تحميل الصفحة', 'error');
-      return;
+    function hideResult() {
+      result.style.display = "none";
+      result.innerHTML = "";
+      price.style.display = "none";
+      price.textContent = "";
+      wa.style.display = "none";
+      wa.href = "#";
+      contactBlock.style.display = "none";
     }
 
-    settings = res;
+    function normalizeJordanPhoneLocal(phone) {
+      let cleaned = String(phone || "").replace(/[^\d+]/g, "");
 
-    dateInput.min = res.minDate;
-    dateInput.max = res.maxDate;
-    dateInput.value = res.minDate;
+      if (cleaned.startsWith("00962")) {
+        cleaned = "0" + cleaned.slice(5);
+      } else if (cleaned.startsWith("+962")) {
+        cleaned = "0" + cleaned.slice(4);
+      } else if (cleaned.startsWith("962")) {
+        cleaned = "0" + cleaned.slice(3);
+      }
 
-    durationSelect.innerHTML = '';
+      return cleaned;
+    }
 
-    const placeholder = document.createElement('option');
-    placeholder.value = '';
-    placeholder.textContent = 'اختر مدة الحجز';
-    placeholder.disabled = true;
-    placeholder.selected = true;
-    durationSelect.appendChild(placeholder);
+    function isValidJordanPhone(phone) {
+      return /^07[789]\d{7}$/.test(normalizeJordanPhoneLocal(phone));
+    }
 
-    res.durations.forEach(function(d) {
-      const o = document.createElement('option');
-      o.value = d.value;
-      o.textContent = d.label + ' - ' + d.price + ' دينار';
-      durationSelect.appendChild(o);
-    });
-  } catch (error) {
-    setLoading(false);
-    showStatus('تعذر تحميل الصفحة', 'error');
-  }
-}
+    function fillSlotPlaceholder(text) {
+      slotSelect.innerHTML = "";
+      const option = document.createElement("option");
+      option.value = "";
+      option.textContent = text;
+      slotSelect.appendChild(option);
+    }
 
-dateInput.addEventListener('change', loadSlots);
-durationSelect.addEventListener('change', loadSlots);
-bookBtn.addEventListener('click', book);
+    function renderBookingSummary(details) {
+      const items = [
+        ["الاسم", details.name],
+        ["الهاتف", details.phone],
+        ["التاريخ", details.date],
+        ["الوقت", details.time],
+        ["المدة", details.duration],
+        ["الملاحظات", details.notes]
+      ];
 
-init();
-</script>
+      result.innerHTML = "";
+      const list = document.createElement("ul");
 
+      items.forEach(function(entry) {
+        const item = document.createElement("li");
+        item.textContent = entry[0] + ": " + entry[1];
+        list.appendChild(item);
+      });
+
+      result.appendChild(list);
+    }
+
+    async function loadSlots() {
+      const date = dateInput.value;
+      const duration = durationSelect.value;
+
+      hideResult();
+      clearStatus();
+      slotHint.textContent = "";
+
+      if (!date || !duration) {
+        fillSlotPlaceholder("اختر التاريخ ومدة الحجز أولاً");
+        return;
+      }
+
+      setLoading(true);
+
+      try {
+        const response = await fetch("/api/slots?date=" + encodeURIComponent(date) + "&durationMinutes=" + encodeURIComponent(duration));
+        const data = await response.json();
+
+        setLoading(false);
+        slotSelect.innerHTML = "";
+
+        if (!response.ok) {
+          fillSlotPlaceholder("تعذر تحميل المواعيد");
+          showStatus(data.error || "حدث خطأ أثناء تحميل المواعيد", "error");
+          return;
+        }
+
+        const slots = Array.isArray(data.slots) ? data.slots : [];
+        if (!slots.length) {
+          fillSlotPlaceholder("لا توجد مواعيد متاحة");
+          slotHint.textContent = data.notice || "يرجى اختيار تاريخ أو مدة مختلفة";
+          return;
+        }
+
+        const placeholder = document.createElement("option");
+        placeholder.value = "";
+        placeholder.textContent = "اختر موعدًا مناسبًا";
+        slotSelect.appendChild(placeholder);
+
+        slots.forEach(function(slot) {
+          const option = document.createElement("option");
+          option.value = slot.value;
+          option.textContent = slot.label;
+          slotSelect.appendChild(option);
+        });
+
+        slotHint.textContent = data.googleReady
+          ? "تظهر هنا المواعيد المتاحة فقط"
+          : (data.notice || "تظهر المواعيد المتاحة مبدئيًا، وسيكتمل الربط بعد إضافة مفاتيح Google");
+      } catch (error) {
+        setLoading(false);
+        fillSlotPlaceholder("تعذر تحميل المواعيد");
+        showStatus("حدث خطأ أثناء تحميل المواعيد", "error");
+      }
+    }
+
+    async function book() {
+      hideResult();
+      clearStatus();
+
+      const payload = {
+        date: dateInput.value,
+        durationMinutes: Number(durationSelect.value),
+        startIso: slotSelect.value,
+        name: nameInput.value.trim(),
+        phone: phoneInput.value.trim(),
+        notes: notesInput.value.trim()
+      };
+
+      if (!payload.date || !payload.durationMinutes || !payload.startIso || !payload.name || !payload.phone) {
+        showStatus("يرجى تعبئة جميع الحقول المطلوبة", "error");
+        return;
+      }
+
+      if (!isValidJordanPhone(payload.phone)) {
+        showStatus("رقم الهاتف غير صحيح", "error");
+        return;
+      }
+
+      setLoading(true);
+
+      try {
+        const response = await fetch("/api/booking", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
+        });
+
+        const data = await response.json();
+        setLoading(false);
+
+        if (!response.ok) {
+          showStatus(data.error || "تعذر تنفيذ الحجز", "error");
+          return;
+        }
+
+        showStatus(data.message || "تم تأكيد الحجز بنجاح", "success");
+        renderBookingSummary(data.bookingDetails);
+        price.textContent = data.bookingDetails.price;
+        result.style.display = "block";
+        price.style.display = "block";
+        wa.href = "https://wa.me/" + data.arenaWhatsappNumber + "?text=" + encodeURIComponent(data.whatsappText);
+        wa.style.display = "block";
+        contactBlock.style.display = "block";
+        wa.scrollIntoView({ behavior: "smooth", block: "center" });
+      } catch (error) {
+        setLoading(false);
+        showStatus("تعذر تنفيذ الحجز", "error");
+      }
+    }
+
+    async function init() {
+      fillSlotPlaceholder("اختر التاريخ ومدة الحجز أولاً");
+      setLoading(true);
+
+      try {
+        const response = await fetch("/api/settings");
+        const data = await response.json();
+        setLoading(false);
+
+        if (!response.ok) {
+          showStatus(data.error || "تعذر تحميل الصفحة", "error");
+          return;
+        }
+
+        dateInput.min = data.minDate;
+        dateInput.max = data.maxDate;
+        dateInput.value = data.minDate;
+
+        durationSelect.innerHTML = "";
+        const placeholder = document.createElement("option");
+        placeholder.value = "";
+        placeholder.textContent = "اختر مدة الحجز";
+        placeholder.disabled = true;
+        placeholder.selected = true;
+        durationSelect.appendChild(placeholder);
+
+        data.durations.forEach(function(duration) {
+          const option = document.createElement("option");
+          option.value = duration.value;
+          option.textContent = duration.label + " - " + duration.price + " دينار";
+          durationSelect.appendChild(option);
+        });
+
+        if (!data.googleReady) {
+          const message = data.googleStatus && data.googleStatus.message
+            ? data.googleStatus.message
+            : "الواجهة تعمل الآن، لكن ربط Google غير مكتمل.";
+          showStatus(message, "info");
+        }
+      } catch (error) {
+        setLoading(false);
+        showStatus("تعذر تحميل الصفحة", "error");
+      }
+    }
+
+    dateInput.addEventListener("change", loadSlots);
+    durationSelect.addEventListener("change", loadSlots);
+    bookBtn.addEventListener("click", book);
+
+    init();
+  </script>
 </body>
 </html>
