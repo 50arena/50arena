@@ -101,7 +101,8 @@ function formatDateOnly(date) {
 }
 
 function formatTime(date) {
-  return getFormatter("ar-JO", {
+  return new Intl.DateTimeFormat("ar-JO-u-nu-latn", {
+    timeZone: CONFIG.TIMEZONE,
     hour: "numeric",
     minute: "2-digit",
     hour12: true
