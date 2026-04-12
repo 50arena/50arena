@@ -626,7 +626,7 @@ if (!response.ok) {
 }
 
 
-        showStatus(data.message || "تم تأكيد الحجز بنجاح، شكرًا لاختيارك \u202A50 Arena\u202C", "success");
+        showStatus(data.message || "تم تأكيد الحجز بنجاح، شكرًا لاختيارك ملعب \u200E50 Arena\u200E", "success");
         renderBookingSummary(data.bookingDetails);
         price.textContent = data.bookingDetails.price;
         result.style.display = "block";
