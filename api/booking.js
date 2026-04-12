@@ -129,6 +129,9 @@ module.exports = async function handler(req, res) {
     try {
       await ensureSheetHeader();
       await appendBookingToSheet({
+        createdAt: new Date().toLocaleString("en-GB", {
+          timeZone: CONFIG.TIMEZONE
+        }),
         name,
         phone: phoneInternational,
         date,
@@ -154,7 +157,7 @@ module.exports = async function handler(req, res) {
     }
 
     const whatsappText = [
-      `تأكيد حجز \u202A${CONFIG.BRAND_NAME}\u202C`,
+      `تأكيد حجز \u200E50 Arena\u200E`,
       `الاسم: ${name}`,
       `رقم الهاتف: ${phoneLocal}`,
       `التاريخ: ${date}`,
