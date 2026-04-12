@@ -113,6 +113,14 @@
       gap: 0.85rem;
     }
 
+    .grid.two {
+      grid-template-columns: 1fr;
+    }
+
+    .slot-group {
+      margin-top: 0.9rem;
+    }
+
     label {
       display: block;
       font-size: 1rem;
@@ -143,7 +151,7 @@
     .hint {
       font-size: 0.86rem;
       color: var(--muted);
-      margin-top: -0.25rem;
+      margin-top: 0.35rem;
     }
 
     .result {
@@ -220,39 +228,6 @@
       text-align: center;
     }
 
-    .fixed-btn {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    padding: 0.75rem 1rem max(0.75rem, env(safe-area-inset-bottom));
-    background: rgba(255, 255, 255, 0.97);
-    backdrop-filter: blur(12px);
-    border-top: 1px solid rgba(215, 227, 219, 0.9);
-    z-index: 1000;
-}
-    }
-
-    .fixed-btn button {
-      width: min(720px, 100%);
-      display: block;
-      margin: 0 auto;
-      height: 3.6rem;
-      font-size: 1.1rem;
-      background: linear-gradient(135deg, var(--accent) 0%, #18704a 100%);
-      color: #fff;
-      border: none;
-      border-radius: 1rem;
-      font-family: inherit;
-      font-weight: 800;
-      cursor: pointer;
-    }
-
-    .fixed-btn button:disabled {
-      opacity: 0.6;
-      cursor: wait;
-    }
-
     .contact-block {
       display: none;
       margin-top: 1rem;
@@ -298,7 +273,6 @@
     .footer-contact {
       margin-top: 1.2rem;
       background: linear-gradient(180deg, #0d6b34 0%, var(--accent) 100%);
-      border-radius: 0;
       padding: 2rem 1rem 6.5rem;
       color: #fff;
       text-align: center;
@@ -313,43 +287,34 @@
       text-align: center;
     }
 
-    .footer-contact .contact-icons {
+    .footer-icons {
       display: flex;
       justify-content: center;
       align-items: center;
-      flex-wrap: nowrap;
-      gap: 0.7rem;
-      overflow-x: auto;
+      gap: 0.9rem;
+      flex-wrap: wrap;
     }
 
-    .footer-contact .contact-link {
-      width: auto;
-      min-width: 88px;
-      padding: 0 0.8rem;
-      height: 50px;
-      border-radius: 1.15rem;
-      color: var(--accent);
-      text-decoration: none;
-      font-weight: 800;
-      gap: 0.4rem;
-      box-shadow: none;
-      text-align: center;
-      white-space: nowrap;
+    .footer-icon {
+      width: 58px;
+      height: 58px;
+      border-radius: 999px;
+      background: #ffffff;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
     }
 
-    .footer-contact .contact-link img {
-      width: 18px;
-      height: 18px;
+    .footer-icon img {
+      width: 24px;
+      height: 24px;
+      object-fit: contain;
+      display: block;
     }
 
-    .footer-contact .contact-label {
-      display: inline-block;
-      color: var(--accent);
-      font-size: 0.88rem;
-      text-align: center;
-    }
-
-     .floating-wa {
+    .floating-wa {
       position: fixed;
       left: 1rem;
       bottom: 5.7rem;
@@ -362,27 +327,44 @@
       box-shadow: none;
       z-index: 1001;
     }
-    
-     .floating-wa img {
+
+    .floating-wa img {
       width: 52px;
       height: 52px;
       display: block;
       object-fit: contain;
     }
 
-
-    .app-footer {
-      text-align: center;
-      padding: 1rem 0 0;
-      color: #fff;
-      font-weight: 800;
-      font-size: 1rem;
+    .fixed-btn {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      padding: 0.75rem 1rem max(0.75rem, env(safe-area-inset-bottom));
+      background: rgba(255, 255, 255, 0.97);
+      backdrop-filter: blur(12px);
+      border-top: 1px solid rgba(215, 227, 219, 0.9);
+      z-index: 1000;
     }
 
-    @media (min-width: 700px) {
-      .grid.two {
-        grid-template-columns: 1fr 1fr;
-      }
+    .fixed-btn button {
+      width: min(720px, calc(100% - 2rem));
+      display: block;
+      margin: 0 auto;
+      height: 3.8rem;
+      font-size: 1.1rem;
+      background: linear-gradient(135deg, var(--accent) 0%, #18704a 100%);
+      color: #fff;
+      border: none;
+      border-radius: 1rem;
+      font-family: inherit;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .fixed-btn button:disabled {
+      opacity: 0.6;
+      cursor: wait;
     }
 
     @media (max-width: 520px) {
@@ -390,13 +372,18 @@
         padding-top: 2rem;
       }
 
-      .footer-contact .contact-icons {
-        gap: 0.7rem;
+      .footer-icons {
+        gap: 0.75rem;
       }
 
-      .footer-contact .contact-link {
-        min-width: 88px;
-        padding: 0 0.8rem;
+      .footer-icon {
+        width: 54px;
+        height: 54px;
+      }
+
+      .footer-icon img {
+        width: 22px;
+        height: 22px;
       }
     }
   </style>
@@ -428,7 +415,7 @@
       </div>
 
       <div class="grid">
-        <div>
+        <div class="slot-group">
           <label for="slot">المواعيد المتاحة</label>
           <select id="slot"></select>
           <div id="slotHint" class="hint"></div>
@@ -479,29 +466,23 @@
   <div class="footer-contact">
     <div class="contact-title">ننتظرك انت وفريقك في <span dir="ltr">50 Arena</span></div>
 
-    <div class="contact-icons">
-      <a class="contact-link" href="https://www.facebook.com/50arena" target="_blank" rel="noreferrer" aria-label="Facebook">
+    <div class="footer-icons">
+      <a class="footer-icon" href="https://www.facebook.com/50arena" target="_blank" rel="noreferrer" aria-label="Facebook">
         <img src="https://drive.google.com/thumbnail?id=1tl_M8byvEU05qa0z6U6ahslP-yCxLrxX&sz=w200" alt="Facebook">
-        <span class="contact-label">Facebook</span>
       </a>
 
-      <a class="contact-link" href="https://www.instagram.com/50arena" target="_blank" rel="noreferrer" aria-label="Instagram">
+      <a class="footer-icon" href="https://www.instagram.com/50arena" target="_blank" rel="noreferrer" aria-label="Instagram">
         <img src="https://drive.google.com/thumbnail?id=1np2u6hKRIBj9HPNq9NoXRYSi3utRzMVe&sz=w200" alt="Instagram">
-        <span class="contact-label">Instagram</span>
       </a>
 
-      <a class="contact-link" href="https://wa.me/962779605047" target="_blank" rel="noreferrer" aria-label="واتساب">
+      <a class="footer-icon" href="https://wa.me/962779605047" target="_blank" rel="noreferrer" aria-label="واتساب">
         <img src="https://drive.google.com/thumbnail?id=1iNhEgW9xdkgsfIEJ376YLbRnJN_YvTpC&sz=w200" alt="واتساب">
-        <span class="contact-label">واتساب</span>
       </a>
 
-      <a class="contact-link" href="tel:0779605047" aria-label="اتصال">
+      <a class="footer-icon" href="tel:0779605047" aria-label="اتصال">
         <img src="https://drive.google.com/thumbnail?id=1DctrtB5ZOuZaY_0uyGZNCoFEwVnPoumg&sz=w200" alt="اتصال">
-        <span class="contact-label">اتصال</span>
       </a>
     </div>
-
-    <div class="app-footer"></div>
   </div>
 
   <a class="floating-wa" href="https://wa.me/962779605047" target="_blank" rel="noreferrer" aria-label="واتساب">
