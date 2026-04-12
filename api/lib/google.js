@@ -1,3 +1,4 @@
+const crypto = require("crypto");
 const { google } = require("googleapis");
 
 const CONFIG = {
@@ -101,8 +102,7 @@ function formatDateOnly(date) {
 }
 
 function formatTime(date) {
-  return new Intl.DateTimeFormat("ar-JO-u-nu-latn", {
-    timeZone: CONFIG.TIMEZONE,
+  return getFormatter("ar-JO-u-nu-latn", {
     hour: "numeric",
     minute: "2-digit",
     hour12: true
@@ -175,7 +175,7 @@ function normalizeJordanPhoneInternational(phone) {
     return "+962" + local.slice(1);
   }
 
-  return String(phone || "").trim();
+  return cleanString(phone);
 }
 
 function isValidJordanPhone(phone) {
@@ -226,7 +226,8 @@ function getRequiredEnv() {
     clientEmail: cleanString(process.env.GOOGLE_CLIENT_EMAIL),
     privateKey: cleanString(process.env.GOOGLE_PRIVATE_KEY).replace(/\\n/g, "\n"),
     calendarId: cleanString(process.env.GOOGLE_CALENDAR_ID),
-    sheetId: cleanString(process.env.GOOGLE_SHEET_ID)
+    sheetId: cleanString(process.env.GOOGLE_SHEET_ID),
+    cancelSecret: cleanString(process.env.CANCEL_SECRET)
   };
 }
 
@@ -236,6 +237,7 @@ function getGoogleStatus() {
   const hasPrivateKey = Boolean(env.privateKey);
   const hasSheetId = Boolean(env.sheetId);
   const hasCalendarId = Boolean(env.calendarId);
+  const hasCancelSecret = Boolean(env.cancelSecret);
   const calendarLooksValid = hasCalendarId && env.calendarId.toLowerCase() !== "primary";
 
   let message = "Google Ready";
@@ -250,6 +252,8 @@ function getGoogleStatus() {
     message = "GOOGLE_CALENDAR_ID غير موجود";
   } else if (!calendarLooksValid) {
     message = "GOOGLE_CALENDAR_ID يجب أن يكون Calendar ID حقيقيًا وليس primary";
+  } else if (!hasCancelSecret) {
+    message = "CANCEL_SECRET غير موجود";
   }
 
   return {
@@ -257,8 +261,9 @@ function getGoogleStatus() {
     hasPrivateKey,
     hasSheetId,
     hasCalendarId,
+    hasCancelSecret,
     calendarLooksValid,
-    ready: hasClientEmail && hasPrivateKey && hasSheetId && calendarLooksValid,
+    ready: hasClientEmail && hasPrivateKey && hasSheetId && calendarLooksValid && hasCancelSecret,
     message
   };
 }
@@ -410,6 +415,103 @@ async function appendBookingToSheet(row) {
   });
 }
 
+async function getBookingsSheetValues() {
+  assertGoogleEnv();
+  const env = getRequiredEnv();
+  const sheets = await getSheetsClient();
+  const response = await sheets.spreadsheets.values.get({
+    spreadsheetId: env.sheetId,
+    range: "Bookings!A:K"
+  });
+
+  return response.data.values || [];
+}
+
+function createCancellationToken(payload) {
+  const env = getRequiredEnv();
+  const data = {
+    eventId: cleanString(payload.eventId),
+    phone: cleanString(payload.phone),
+    date: cleanString(payload.date)
+  };
+
+  const body = Buffer.from(JSON.stringify(data), "utf8").toString("base64url");
+  const signature = crypto
+    .createHmac("sha256", env.cancelSecret)
+    .update(body)
+    .digest("base64url");
+
+  return `${body}.${signature}`;
+}
+
+function verifyCancellationToken(token) {
+  const env = getRequiredEnv();
+  const [body, signature] = String(token || "").split(".");
+
+  if (!body || !signature) {
+    throw new Error("رابط الإلغاء غير صالح");
+  }
+
+  const expected = crypto
+    .createHmac("sha256", env.cancelSecret)
+    .update(body)
+    .digest("base64url");
+
+  const actualBuffer = Buffer.from(signature);
+  const expectedBuffer = Buffer.from(expected);
+
+  if (
+    actualBuffer.length !== expectedBuffer.length ||
+    !crypto.timingSafeEqual(actualBuffer, expectedBuffer)
+  ) {
+    throw new Error("رابط الإلغاء غير صالح");
+  }
+
+  return JSON.parse(Buffer.from(body, "base64url").toString("utf8"));
+}
+
+async function findBookingRowByEventId(eventId) {
+  const values = await getBookingsSheetValues();
+  if (!values.length) {
+    return null;
+  }
+
+  for (let i = 1; i < values.length; i += 1) {
+    const row = values[i];
+    if (String(row[8] || "").trim() === eventId) {
+      return {
+        rowNumber: i + 1,
+        values: row
+      };
+    }
+  }
+
+  return null;
+}
+
+async function updateBookingCancellation(rowNumber, cancelledAt) {
+  assertGoogleEnv();
+  const env = getRequiredEnv();
+  const sheets = await getSheetsClient();
+
+  await sheets.spreadsheets.values.batchUpdate({
+    spreadsheetId: env.sheetId,
+    requestBody: {
+      valueInputOption: "USER_ENTERED",
+      data: [
+        {
+          range: `Bookings!J${rowNumber}`,
+          values: [["Cancelled"]]
+        },
+        {
+          range: `Bookings!K${rowNumber}`,
+          values: [[cancelledAt]]
+        }
+      ]
+    }
+  });
+}
+
 module.exports = {
   CONFIG,
   cleanString,
@@ -438,5 +540,10 @@ module.exports = {
   ensureSheetHeader,
   appendBookingToSheet,
   getCalendarClient,
-  getSheetsClient
+  getSheetsClient,
+  getBookingsSheetValues,
+  createCancellationToken,
+  verifyCancellationToken,
+  findBookingRowByEventId,
+  updateBookingCancellation
 };
