@@ -168,6 +168,16 @@ function normalizeJordanPhoneLocal(phone) {
   return cleaned;
 }
 
+function normalizeJordanPhoneInternational(phone) {
+  const local = normalizeJordanPhoneLocal(phone);
+
+  if (/^07[789]\d{7}$/.test(local)) {
+    return "+962" + local.slice(1);
+  }
+
+  return String(phone || "").trim();
+}
+
 function isValidJordanPhone(phone) {
   const normalized = normalizeJordanPhoneLocal(phone);
   return /^07[789]\d{7}$/.test(normalized);
@@ -228,6 +238,20 @@ function getGoogleStatus() {
   const hasCalendarId = Boolean(env.calendarId);
   const calendarLooksValid = hasCalendarId && env.calendarId.toLowerCase() !== "primary";
 
+  let message = "Google Ready";
+
+  if (!hasClientEmail) {
+    message = "GOOGLE_CLIENT_EMAIL غير موجود";
+  } else if (!hasPrivateKey) {
+    message = "GOOGLE_PRIVATE_KEY غير موجود";
+  } else if (!hasSheetId) {
+    message = "GOOGLE_SHEET_ID غير موجود";
+  } else if (!hasCalendarId) {
+    message = "GOOGLE_CALENDAR_ID غير موجود";
+  } else if (!calendarLooksValid) {
+    message = "GOOGLE_CALENDAR_ID يجب أن يكون Calendar ID حقيقيًا وليس primary";
+  }
+
   return {
     hasClientEmail,
     hasPrivateKey,
@@ -235,11 +259,7 @@ function getGoogleStatus() {
     hasCalendarId,
     calendarLooksValid,
     ready: hasClientEmail && hasPrivateKey && hasSheetId && calendarLooksValid,
-    message: !hasClientEmail || !hasPrivateKey || !hasSheetId || !hasCalendarId
-      ? "إعدادات Google غير مكتملة في Environment Variables"
-      : !calendarLooksValid
-        ? "GOOGLE_CALENDAR_ID يجب أن يكون Calendar ID حقيقيًا وليس primary"
-        : "Google Ready"
+    message
   };
 }
 
@@ -308,11 +328,20 @@ async function tryListCalendarEventsForDay(targetDate) {
     const events = await listCalendarEventsForDay(targetDate);
     return { ok: true, events, source: "google", message: null };
   } catch (error) {
+    const apiMessage =
+      error &&
+      error.response &&
+      error.response.data &&
+      error.response.data.error &&
+      error.response.data.error.message
+        ? error.response.data.error.message
+        : (error && error.message ? error.message : "تعذر قراءة Google Calendar");
+
     return {
       ok: false,
       events: [],
       source: "mock",
-      message: error && error.message ? error.message : "تعذر قراءة Google Calendar"
+      message: apiMessage
     };
   }
 }
@@ -387,6 +416,7 @@ module.exports = {
   isDateWithinBookingWindow,
   isSlotStepAligned,
   normalizeJordanPhoneLocal,
+  normalizeJordanPhoneInternational,
   isValidJordanPhone,
   getPrice,
   getDurationLabel,
