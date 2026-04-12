@@ -666,18 +666,27 @@
 
       try {
         const response = await fetch("/api/booking", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload)
-        });
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify(payload)
+});
 
-        const raw = await response.text(); let data;  try {   data = JSON.parse(raw); } catch (e) {   data = { error: raw || "تعذر تنفيذ الحجز" }; }
-        setLoading(false);
+const raw = await response.text();
+let data;
 
-        if (!response.ok) {
-          showStatus(data.error || "تعذر تنفيذ الحجز", "error");
-          return;
-        }
+try {
+  data = JSON.parse(raw);
+} catch (e) {
+  data = { error: raw || "تعذر تنفيذ الحجز" };
+}
+
+setLoading(false);
+
+if (!response.ok) {
+  showStatus(data.error || "تعذر تنفيذ الحجز", "error");
+  return;
+}
+
 
         showStatus(data.message || "تم تأكيد الحجز بنجاح", "success");
         renderBookingSummary(data.bookingDetails);
