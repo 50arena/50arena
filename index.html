@@ -202,7 +202,8 @@
       padding: 0.9rem;
       border-radius: 1rem;
       font-size: 0.95rem;
-      line-height: 1.6;
+      line-height: 1.8;
+      white-space: pre-line;
     }
 
     .status.success {
@@ -408,6 +409,7 @@
 
   <script>
     let settings = null;
+    let whatsappRedirectTimer = null;
 
     const dateInput = document.getElementById("date");
     const durationSelect = document.getElementById("duration");
@@ -438,7 +440,39 @@
       statusBox.textContent = "";
     }
 
+    function clearWhatsappRedirect() {
+      if (whatsappRedirectTimer) {
+        clearTimeout(whatsappRedirectTimer);
+        whatsappRedirectTimer = null;
+      }
+    }
+
+    function startWhatsappRedirect(url) {
+      clearWhatsappRedirect();
+
+      let secondsLeft = 10;
+      showStatus(`تم تأكيد الحجز. سيتم تحويلك إلى واتساب خلال ${secondsLeft} ثوانٍ إذا لم تضغط الزر بنفسك.`, "success");
+
+      const countdown = setInterval(() => {
+        secondsLeft -= 1;
+
+        if (secondsLeft <= 0) {
+          clearInterval(countdown);
+          window.location.href = url;
+          return;
+        }
+
+        showStatus(`تم تأكيد الحجز. سيتم تحويلك إلى واتساب خلال ${secondsLeft} ثوانٍ إذا لم تضغط الزر بنفسك.`, "success");
+      }, 1000);
+
+      whatsappRedirectTimer = setTimeout(() => {
+        clearInterval(countdown);
+        window.location.href = url;
+      }, 10000);
+    }
+
     function hideResult() {
+      clearWhatsappRedirect();
       result.style.display = "none";
       result.innerHTML = "";
       price.style.display = "none";
@@ -614,6 +648,7 @@
         price.style.display = "block";
         wa.href = "https://wa.me/" + data.arenaWhatsappNumber + "?text=" + encodeURIComponent(data.whatsappText);
         wa.style.display = "block";
+        startWhatsappRedirect(wa.href);
         wa.scrollIntoView({ behavior: "smooth", block: "center" });
       } catch (error) {
         setLoading(false);
@@ -675,6 +710,7 @@
       }
     }
 
+    wa.addEventListener("click", clearWhatsappRedirect);
     dateInput.addEventListener("change", loadSlots);
     durationSelect.addEventListener("change", loadSlots);
     bookBtn.addEventListener("click", book);
